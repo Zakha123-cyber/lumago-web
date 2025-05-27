@@ -11,15 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tempat_wisata', function (Blueprint $table) {
+        Schema::create('scan_validasi', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('transaksi_id')->constrained('transaksi')->onDelete('cascade');
             $table->foreignId('admin_id')->constrained('users')->onDelete('cascade');
-            $table->string('nama');
-            $table->text('deskripsi');
-            $table->string('lokasi');
-            $table->text('link_maps');
-            $table->string('jam_operasional');
-            $table->decimal('harga_tiket', 10, 2);
+            $table->dateTime('waktu_scan');
+            $table->string('lokasi_scan')->nullable();
+            $table->boolean('status_validasi')->default(false);
             $table->timestamps();
         });
     }
@@ -29,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('tempat_wisatas');
+        Schema::dropIfExists('scan_validasis');
     }
 };
