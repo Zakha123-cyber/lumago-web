@@ -13,3 +13,7 @@ Route::get('/wisata', function () {
 Route::get('/booking', function () {
     return view('booking-page.booking-page');
 });
+
+Route::get('/detail', function () {
+    return view('detail-page.detail-wisata');
+});
