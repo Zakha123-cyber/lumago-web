@@ -2,6 +2,151 @@
 
 @push('styles')
     <style>
+        /* Hero section enhancement */
+        .hero-bg {
+            background: url('{{ asset('storage/images/bg-landing-page.jpeg') }}');
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+
+        .hero-bg::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 200px;
+            /* Increased height for smoother transition */
+            background: linear-gradient(to bottom,
+                    transparent,
+                    rgba(0, 0, 0, 0.5) 40%,
+                    rgba(0, 0, 0, 0.8) 70%,
+                    #000 100%);
+            pointer-events: none;
+        }
+
+        /* Enhanced floating particles */
+        .floating-particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: #10b981;
+            border-radius: 50%;
+            filter: blur(1px);
+            animation: particleFloat 8s infinite;
+            opacity: 0.3;
+        }
+
+        .particle:nth-child(1) {
+            left: 10%;
+            top: 20%;
+            animation-delay: 0s;
+        }
+
+        .particle:nth-child(2) {
+            left: 30%;
+            top: 40%;
+            animation-delay: 2s;
+        }
+
+        .particle:nth-child(3) {
+            left: 50%;
+            top: 60%;
+            animation-delay: 4s;
+        }
+
+        .particle:nth-child(4) {
+            left: 70%;
+            top: 30%;
+            animation-delay: 6s;
+        }
+
+        .particle:nth-child(5) {
+            left: 90%;
+            top: 50%;
+            animation-delay: 8s;
+        }
+
+        @keyframes particleFloat {
+
+            0%,
+            100% {
+                transform: translateY(0) translateX(0);
+                opacity: 0.3;
+            }
+
+            50% {
+                transform: translateY(-30px) translateX(20px);
+                opacity: 0.6;
+            }
+        }
+
+        /* Enhanced text animations */
+        .text-reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .text-reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .delay-1 {
+            transition-delay: 0.2s;
+        }
+
+        .delay-2 {
+            transition-delay: 0.4s;
+        }
+
+        .delay-3 {
+            transition-delay: 0.6s;
+        }
+
+        .delay-4 {
+            transition-delay: 0.8s;
+        }
+
+        /* Enhanced scroll arrow */
+        .scroll-indicator {
+            animation: bounce 2s infinite;
+            transition: opacity 0.3s ease;
+        }
+
+        .scroll-indicator:hover {
+            opacity: 0.7;
+        }
+
+        @keyframes bounce {
+
+            0%,
+            20%,
+            50%,
+            80%,
+            100% {
+                transform: translateY(0);
+            }
+
+            40% {
+                transform: translateY(-10px);
+            }
+
+            60% {
+                transform: translateY(-5px);
+            }
+        }
+
         .hero-bg {
             background: url('{{ asset('storage/images/bg-landing-page.jpeg') }}');
             background-size: cover;
@@ -46,6 +191,414 @@
                 transform: translateY(-20px);
             }
         }
+
+        /* Enhanced About Section Styles */
+        .about-section {
+            background: #000;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .about-section::before,
+        .about-section::after {
+            display: none !important;
+        }
+
+        .about-section .about-gradient-transition {
+            position: absolute;
+            top: -40px;
+            left: 0;
+            width: 100%;
+            height: 40px;
+            background: linear-gradient(to bottom, rgba(6, 78, 59, 0.8), #000 90%);
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .about-title {
+            background: linear-gradient(135deg, #ffffff 0%, #10b981 50%, #06d6a0 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            -webkit-text-fill-color: unset;
+            animation: titleGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes titleGlow {
+
+            0%,
+            100% {
+                filter: brightness(1);
+            }
+
+            50% {
+                filter: brightness(1.2);
+            }
+        }
+
+        .enhanced-image-card {
+            background: linear-gradient(145deg, #1f2937, #374151);
+            border-radius: 2rem 0 0 2rem;
+            position: relative;
+            overflow: hidden;
+            box-shadow:
+                0 25px 50px -12px rgba(0, 0, 0, 0.5),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .enhanced-image-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(16, 185, 129, 0.1), transparent);
+            animation: rotateGlow 4s linear infinite;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .enhanced-image-card:hover::before {
+            opacity: 1;
+        }
+
+        @keyframes rotateGlow {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .enhanced-image-card::after {
+            content: '';
+            position: absolute;
+            inset: 2px;
+            border-radius: 2rem;
+            z-index: 1;
+            background: transparent;
+        }
+
+        .image-overlay {
+            position: absolute;
+            inset: 2px;
+            border-radius: 2rem;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 1;
+            transition: all 0.4s ease;
+            background: transparent;
+        }
+
+        .enhanced-image-card:hover .image-overlay {
+            opacity: 1;
+            background: transparent;
+        }
+
+        .enhanced-image-card:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow:
+                0 35px 70px -15px rgba(0, 0, 0, 0.6),
+                0 0 40px rgba(16, 185, 129, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        }
+
+        .image-content {
+            position: relative;
+            z-index: 3;
+            text-align: center;
+            color: white;
+            padding: 2rem;
+        }
+
+        .image-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            animation: iconFloat 3s ease-in-out infinite;
+            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+        }
+
+        @keyframes iconFloat {
+
+            0%,
+            100% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .scroll-trigger {
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .scroll-trigger.animate {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .scroll-trigger.from-right {
+            transform: translateX(50px);
+        }
+
+        .scroll-trigger.from-right.animate {
+            transform: translateX(0);
+        }
+
+        /* Add these new styles */
+        .animate-spin-slow {
+            animation: spin 6s linear infinite;
+        }
+
+        @keyframes spin {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Enhanced dots animation */
+        .dot.bg-green-400 {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Section reveal animation */
+        .section-reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .section-reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Gradient text animation */
+        .gradient-text {
+            background: linear-gradient(to right, #10b981, #059669);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            background-size: 200% 100%;
+            animation: gradient 8s linear infinite;
+        }
+
+        @keyframes gradient {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        /* Dynamic Background Pattern */
+        .dynamic-bg {
+            position: relative;
+            background-color: #000;
+            overflow: hidden;
+        }
+
+        .dynamic-bg::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image:
+                radial-gradient(circle at 25% 25%, rgba(16, 185, 129, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 75% 75%, rgba(59, 130, 246, 0.05) 0%, transparent 50%);
+            opacity: 0.5;
+            z-index: 1;
+        }
+
+        /* Enhanced grid pattern with fade edges */
+        .grid-pattern {
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background-image:
+                linear-gradient(rgba(16, 185, 129, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(16, 185, 129, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: gridMove 20s linear infinite;
+            opacity: 0.3;
+            transform: rotate(45deg);
+            mask-image: linear-gradient(to bottom,
+                    transparent 0%,
+                    black 15%,
+                    black 85%,
+                    transparent 100%);
+        }
+
+        @keyframes gridMove {
+            0% {
+                transform: translateY(-50%) rotate(45deg);
+            }
+
+            100% {
+                transform: translateY(0%) rotate(45deg);
+            }
+        }
+
+        /* Floating Elements */
+        .floating-element {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(50px);
+            opacity: 0.1;
+            z-index: 1;
+        }
+
+        .float-1 {
+            width: 300px;
+            height: 300px;
+            background: #10b981;
+            animation: float1 15s ease-in-out infinite;
+        }
+
+        .float-2 {
+            width: 200px;
+            height: 200px;
+            background: #3b82f6;
+            animation: float2 20s ease-in-out infinite;
+        }
+
+        @keyframes float1 {
+
+            0%,
+            100% {
+                transform: translate(0, 0);
+            }
+
+            50% {
+                transform: translate(100px, 50px);
+            }
+        }
+
+        @keyframes float2 {
+
+            0%,
+            100% {
+                transform: translate(0, 0);
+            }
+
+            50% {
+                transform: translate(-100px, -50px);
+            }
+        }
+
+        /* Enhanced Section Transitions */
+        .section-transition {
+            position: relative;
+            z-index: 1;
+        }
+
+        .section-transition::before {
+            content: '';
+            position: absolute;
+            top: -100px;
+            left: 0;
+            width: 100%;
+            height: 100px;
+            background: linear-gradient(to bottom,
+                    transparent 0%,
+                    rgba(0, 0, 0, 0.2) 20%,
+                    rgba(0, 0, 0, 0.6) 50%,
+                    rgba(0, 0, 0, 0.8) 75%,
+                    #000 100%);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .section-transition::after {
+            content: '';
+            position: absolute;
+            bottom: -100px;
+            left: 0;
+            width: 100%;
+            height: 100px;
+            background: linear-gradient(to top,
+                    transparent 0%,
+                    rgba(0, 0, 0, 0.2) 20%,
+                    rgba(0, 0, 0, 0.6) 50%,
+                    rgba(0, 0, 0, 0.8) 75%,
+                    #000 100%);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* Improved Text Animations */
+        .fade-up {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .fade-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Enhanced Image Card Hover Effects */
+        .enhanced-image-card {
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .enhanced-image-card:hover {
+            transform: translateY(-10px);
+            box-shadow:
+                0 25px 50px -12px rgba(16, 185, 129, 0.25),
+                0 0 30px rgba(16, 185, 129, 0.1);
+        }
+
+        .enhanced-image-card::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom,
+                    transparent 0%,
+                    rgba(0, 0, 0, 0.5) 100%);
+            border-radius: inherit;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .enhanced-image-card:hover::after {
+            opacity: 1;
+        }
+
+        /* Smooth scroll for navigation */
+        .scroll-indicator {
+            cursor: pointer;
+        }
+
+        /* Hide scrollbar for specific containers */
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
     </style>
 @endpush
 
@@ -55,260 +608,303 @@
         <div class="absolute inset-0 bg-gradient-to-r from-green-800/40 to-green-600/20"></div>
         <div class="container mx-auto px-6 relative z-10">
             <div class="max-w-4xl">
-                <h1 class="text-5xl md:text-7xl font-bold text-white mb-6 floating-animation">
+                <h1 class="text-5xl md:text-7xl font-bold text-white mb-6 floating-animation text-reveal">
                     It's Great Time<br>
                     to Start your <span class="text-green-400">Journey Now</span>
                 </h1>
-                <p class="text-xl text-gray-200 mb-8 max-w-2xl">
+                <p class="text-xl text-gray-200 mb-8 max-w-2xl text-reveal delay-1">
                     Jelajahi keindahan alam Indonesia dengan pengalaman yang tak terlupakan. Booking mudah, perjalanan
                     hebat!
                 </p>
-                <button class="btn-primary text-white px-8 py-4 rounded-full text-lg font-semibold">
+                <button class="btn-primary text-white px-8 py-4 rounded-full text-lg font-semibold text-reveal delay-2">
                     Mulai Petualangan <i class="fas fa-arrow-right ml-2"></i>
                 </button>
             </div>
         </div>
-        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 text-white animate-bounce">
-            <i class="fas fa-chevron-down text-2xl"></i>
-        </div>
     </section>
 
-    <!-- About Lumago Section -->
-    <section class="py-20" style="background: linear-gradient(135deg, #064e3b 0%, #065f46 100%);">
-        <div class="container mx-auto px-6">
-            <div class="grid lg:grid-cols-2 gap-12 items-center">
-                <!-- Text Content -->
-                <div class="text-white">
-                    <span class="text-green-400 font-semibold text-sm tracking-widest uppercase mb-4 block">ABOUT</span>
-                    <h2 class="text-5xl font-bold mb-8">LUMAGO!</h2>
-                    <div class="space-y-4 text-gray-300 leading-relaxed">
-                        <p>Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore
-                            et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi
-                            ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit
-                            esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-                            sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+    <!-- Wrap all main content sections -->
+    <div class="section-wrapper">
+        <!-- About Section -->
+        <section class="section-transition dynamic-bg py-20 relative">
+            <div class="grid-pattern"></div>
+            <div class="floating-element float-1 left-[10%] top-[20%]"></div>
+            <div class="floating-element float-2 right-[15%] bottom-[30%]"></div>
 
-                        <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium,
-                            totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae
-                            dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut
-                            fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</p>
+            <!-- Gradient transition di atas section -->
+            <div class="about-gradient-transition"></div>
 
-                        <p>Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed
-                            quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat
-                            voluptatem.</p>
-                    </div>
-                </div>
+            <!-- Floating Particles -->
+            <div class="floating-particles">
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+            </div>
 
-                <!-- Image Card Component -->
-                <div class="relative transfrom lg:translate-x-35">
-                    <div class="w-120 h-80 lg:rounded-l-full sm:rounded-l-3xl overflow-hidden shadow-2xl transform hover:scale-105 transition-all duration-300 ml-auto"
-                        style="background: linear-gradient(45deg, #f59e0b, #f97316); box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);">
-                        <!-- Gradient Overlay -->
-                        <div class="absolute inset-0"
-                            style="background: linear-gradient(135deg, rgba(251, 191, 36, 0.8) 0%, rgba(245, 101, 101, 0.6) 100%);">
+            <div class="container mx-auto px-6 relative z-10">
+                <div class="grid lg:grid-cols-2 gap-12 items-center">
+                    <!-- Text Content -->
+                    <div class="text-white scroll-trigger">
+                        <span class="text-green-400 font-semibold text-sm tracking-widest uppercase mb-4 block text-reveal">
+                            ABOUT
+                        </span>
+                        <h2 class="text-5xl font-bold mb-8 about-title text-reveal delay-1">
+                            LUMAGO!
+                        </h2>
+                        <div class="space-y-4 text-gray-300 leading-relaxed">
+                            <p class="text-reveal delay-2">
+                                Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut
+                                labore
+                                et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
+                                nisi
+                                ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
+                                velit
+                                esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident,
+                                sunt in culpa qui officia deserunt mollit anim id est laborum.
+                            </p>
+
+                            <p class="text-reveal delay-3">
+                                Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque
+                                laudantium,
+                                totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae
+                                vitae
+                                dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut
+                                fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.
+                            </p>
+
+                            <p class="text-reveal delay-4">
+                                Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci
+                                velit,
+                                sed
+                                quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat
+                                voluptatem.
+                            </p>
                         </div>
-
-                        <!-- Bottom content area -->
-                        <div class="absolute bottom-0 left-0 right-0 h-24"
-                            style="background: linear-gradient(to top, rgba(0, 0, 0, 0.4), transparent);"></div>
                     </div>
-                </div>
-            </div>
-        </div>
-    </section>
 
-    <!-- Wisata Lumajang Section -->
-    <section class="py-20" style="background: linear-gradient(135deg, #064e3b 0%, #065f46 100%);">
-        <div class="container mx-auto px-6">
-            <div class="grid lg:grid-cols-2 gap-12 items-center">
-                <!-- Image Card Component -->
-                <div class="relative transform lg:-translate-x-35">
-                    <div class="w-120 h-80 lg:rounded-r-full sm:rounded-r-3xl overflow-hidden shadow-2xl transform hover:scale-105 transition-all duration-300"
-                        style="box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);">
-                    </div>
-                </div>
-
-                <!-- Text Content -->
-                <div class="text-white order-1 lg:order-2">
-                    <span class="text-green-400 font-semibold text-sm tracking-widest uppercase mb-4 block">WISATA</span>
-                    <h2 class="text-5xl font-bold mb-8">LUMAJANG</h2>
-                    <div class="space-y-4 text-gray-300 leading-relaxed">
-                        <p>Kabupat Lumajang memiliki potensi keindahan alam yang luar biasa dan masih asli. Mulai dari
-                            pegunungan hingga laut, hampir semua yang ada di Indonesia, Anda bisa menemukan berbagai
-                            destinasi Kota Lumajang yang memiliki daya tarik tersendiri.</p>
-
-                        <p>Tempat wisata di Lumajang yang beragam ini mulai dari wisata alam, wisata budaya, wisata edukasi,
-                            dan wisata kuliner. Beraneka ragam destinasi ini tentunya akan memberikan pengalaman yang
-                            berbeda dan menarik bagi para wisatawan yang berkunjung ke Lumajang.</p>
-
-                        <p>Setiap objek wisata memiliki keunikan dan pesona tersendiri yang menunggu untuk dijelajahi. Dari
-                            keindahan alam pegunungan hingga pesona pantai yang menakjubkan, Lumajang menawarkan destinasi
-                            yang sempurna untuk petualangan yang tak terlupakan.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Kenapa Lumajang Section -->
-    <section class="py-20" style="background: linear-gradient(135deg, #064e3b 0%, #065f46 100%);">
-        <div class="container mx-auto px-6">
-            <div class="grid lg:grid-cols-2 gap-12 items-center">
-                <!-- Text Content -->
-                <div class="text-white">
-                    <span class="text-green-400 font-semibold text-sm tracking-widest uppercase mb-4 block">KENAPA</span>
-                    <h2 class="text-5xl font-bold mb-8">LUMAJANG</h2>
-                    <div class="space-y-4 text-gray-300 leading-relaxed">
-                        <p>Lumajang memiliki kombinasi yang sempurna antara keindahan alam yang menakjubkan dan kekayaan
-                            budaya lokal yang masih terjaga. Dengan beragam destinasi mulai dari pegunungan hingga pantai,
-                            Lumajang menawarkan pengalaman wisata yang lengkap dan tak terlupakan.</p>
-
-                        <p>Keramahan masyarakat lokal, aksesibilitas yang semakin baik, dan fasilitas wisata yang terus
-                            berkembang membuat Lumajang menjadi destinasi yang tepat bagi wisatawan yang mencari petualangan
-                            autentik dengan kenyamanan modern.</p>
-
-                        <p>Dari sunrise di Gunung Bromo hingga pesona air terjun yang tersembunyi, setiap sudut Lumajang
-                            menyimpan kejutan dan keindahan yang siap memukau setiap pengunjung yang datang untuk
-                            menjelajahi keajaiban alam Indonesia.</p>
-                    </div>
-                </div>
-
-                <!-- Image Card Component -->
-                <div class="relative transfrom lg:translate-x-35">
-                    <div class="w-120 h-80 lg:rounded-l-full rounded-l-3xl overflow-hidden shadow-2xl transform hover:scale-105 transition-all duration-300 ml-auto"
-                        style="background: linear-gradient(45deg, #3b82f6, #ef4444); box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);">
-                        <!-- Gradient Overlay -->
-                        <div class="absolute inset-0"
-                            style="background: linear-gradient(135deg, rgba(59, 130, 246, 0.8) 0%, rgba(239, 68, 68, 0.6) 50%, rgba(245, 158, 11, 0.4) 100%);">
+                    <!-- Enhanced Image Card Component -->
+                    <div class="relative transform lg:translate-x-35 scroll-trigger from-right">
+                        <div class="enhanced-image-card w-120 h-80 ml-auto" style="border-radius:2rem 0 0 2rem;">
+                            <img src="{{ asset('storage/images/bg-landing-page.jpeg') }}" alt="About Image"
+                                class="absolute inset-0 w-full h-full object-cover z-0"
+                                style="border-radius:2rem 0 0 2rem;">
+                            <div class="image-overlay" style="border-radius:2rem 0 0 2rem;">
+                                <div class="image-content">
+                                    <div class="image-icon">
+                                        <i class="fas fa-mountain"></i>
+                                    </div>
+                                    <h3 class="text-xl font-bold mb-2">Adventure Awaits</h3>
+                                    <p class="text-sm opacity-90">Discover the beauty of nature</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    {{-- Destinations Carousel Section --}}
-    <section class="w-full px-4 py-12 bg-gray-100">
-        <div class="relative max-w-7xl mx-auto">
-            <!-- Section Header (Optional) -->
-            <div class="text-center mb-8">
-                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-                    Explore Amazing Destinations
-                </h2>
-                <p class="text-lg text-gray-600">
-                    Discover breathtaking landscapes and unforgettable experiences
-                </p>
-            </div>
+        <!-- Wisata Lumajang Section -->
+        <section class="section-transition dynamic-bg py-20 relative">
+            <div class="grid-pattern"></div>
+            <div class="floating-element float-2 left-[20%] bottom-[20%]"></div>
+            <div class="floating-element float-1 right-[10%] top-[30%]"></div>
 
-            <!-- Navigation Arrows -->
-            <button id="prevBtn"
-                class="absolute left-0 top-1/2 -translate-y-1/2 z-20 bg-white rounded-full p-3 shadow-lg hover:bg-gray-200 transition -ml-4">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                    stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-                </svg>
-            </button>
+            <div class="container mx-auto px-6">
+                <div class="grid lg:grid-cols-2 gap-12 items-center">
+                    <!-- Image Card Component -->
+                    <div class="relative transform lg:-translate-x-35">
+                        <div class="enhanced-image-card w-120 h-80 ml-0 lg:mr-auto" style="border-radius:0 2rem 2rem 0;">
+                            <img src="{{ asset('storage/images/bg-landing-page.jpeg') }}" alt="Wisata Image"
+                                class="absolute inset-0 w-full h-full object-cover z-0"
+                                style="border-radius:0 2rem 2rem 0;">
+                            <div class="image-overlay" style="border-radius:0 2rem 2rem 0;">
+                                <div class="image-content">
+                                    <div class="image-icon">
+                                        <i class="fas fa-tree"></i>
+                                    </div>
+                                    <h3 class="text-xl font-bold mb-2">Wisata Alam</h3>
+                                    <p class="text-sm opacity-90">Keindahan alam Lumajang</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Text Content -->
+                    <div class="text-white order-1 lg:order-2">
+                        <span
+                            class="text-green-400 font-semibold text-sm tracking-widest uppercase mb-4 block">WISATA</span>
+                        <h2 class="text-5xl font-bold mb-8">LUMAJANG</h2>
+                        <div class="space-y-4 text-gray-300 leading-relaxed">
+                            <p>Kabupat Lumajang memiliki potensi keindahan alam yang luar biasa dan masih asli. Mulai dari
+                                pegunungan hingga laut, hampir semua yang ada di Indonesia, Anda bisa menemukan berbagai
+                                destinasi Kota Lumajang yang memiliki daya tarik tersendiri.</p>
 
-            <button id="nextBtn"
-                class="absolute right-0 top-1/2 -translate-y-1/2 z-20 bg-white rounded-full p-3 shadow-lg hover:bg-gray-200 transition -mr-4">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                    stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                </svg>
-            </button>
+                            <p>Tempat wisata di Lumajang yang beragam ini mulai dari wisata alam, wisata budaya, wisata
+                                edukasi,
+                                dan wisata kuliner. Beraneka ragam destinasi ini tentunya akan memberikan pengalaman yang
+                                berbeda dan menarik bagi para wisatawan yang berkunjung ke Lumajang.</p>
 
-            <!-- Cards Container -->
-            <div id="cardsContainer" class="overflow-x-auto py-8 px-12 hide-scrollbar scroll-smooth">
-                <div class="flex items-center space-x-0 w-max mx-auto" id="cardsWrapper">
-                    @php
-                        $destinations = [
-                            [
-                                'title' => 'Pacific Rim',
-                                'subtitle' => 'Wild Pacific Coast',
-                                'image' => 'https://source.unsplash.com/800x600/?pacific,coast',
-                                'url' => '/destinations/pacific-rim',
-                            ],
-                            [
-                                'title' => 'Vancouver',
-                                'subtitle' => 'Urban Adventure',
-                                'image' => 'https://source.unsplash.com/800x600/?vancouver,city',
-                                'url' => '/destinations/vancouver',
-                            ],
-                            [
-                                'title' => 'Victoria',
-                                'subtitle' => 'British Columbia',
-                                'image' => 'https://source.unsplash.com/800x600/?victoria,garden',
-                                'url' => '/destinations/victoria',
-                            ],
-                            [
-                                'title' => 'Calgary',
-                                'subtitle' => 'Mountain Gateway',
-                                'image' => 'https://source.unsplash.com/800x600/?calgary,mountain',
-                                'url' => '/destinations/calgary',
-                            ],
-                            [
-                                'title' => 'Whistler',
-                                'subtitle' => 'Alpine Paradise',
-                                'image' => 'https://source.unsplash.com/800x600/?whistler,ski',
-                                'url' => '/destinations/whistler',
-                            ],
-                            [
-                                'title' => 'Banff',
-                                'subtitle' => 'Rocky Mountains',
-                                'image' => 'https://source.unsplash.com/800x600/?banff,lake',
-                                'url' => '/destinations/banff',
-                            ],
-                        ];
-                    @endphp
-
-                    @foreach ($destinations as $index => $destination)
-                        <x-destination-card :title="$destination['title']" :subtitle="$destination['subtitle']" :image="$destination['image']" :url="$destination['url']"
-                            :isActive="$index === 2" />
-                    @endforeach
+                            <p>Setiap objek wisata memiliki keunikan dan pesona tersendiri yang menunggu untuk dijelajahi.
+                                Dari
+                                keindahan alam pegunungan hingga pesona pantai yang menakjubkan, Lumajang menawarkan
+                                destinasi
+                                yang sempurna untuk petualangan yang tak terlupakan.</p>
+                        </div>
+                    </div>
                 </div>
             </div>
+        </section>
 
-            <!-- Dots Indicator -->
-            <div class="flex justify-center mt-6 space-x-2">
-                @for ($i = 0; $i < count($destinations); $i++)
-                    <button
-                        class="dot w-3 h-3 rounded-full transition-colors duration-300 {{ $i === 2 ? 'bg-blue-500' : 'bg-gray-300 hover:bg-gray-400' }}"
-                        data-index="{{ $i }}"></button>
-                @endfor
+        <!-- Kenapa Lumajang Section -->
+        <section class="section-transition dynamic-bg py-20 relative">
+            <div class="grid-pattern"></div>
+            <div class="floating-element float-1 left-[15%] top-[30%]"></div>
+            <div class="floating-element float-2 right-[20%] bottom-[20%]"></div>
+
+            <div class="container mx-auto px-6">
+                <div class="grid lg:grid-cols-2 gap-12 items-center">
+                    <!-- Text Content -->
+                    <div class="text-white">
+                        <span
+                            class="text-green-400 font-semibold text-sm tracking-widest uppercase mb-4 block">KENAPA</span>
+                        <h2 class="text-5xl font-bold mb-8">LUMAJANG</h2>
+                        <div class="space-y-4 text-gray-300 leading-relaxed">
+                            <p>Lumajang memiliki kombinasi yang sempurna antara keindahan alam yang menakjubkan dan kekayaan
+                                budaya lokal yang masih terjaga. Dengan beragam destinasi mulai dari pegunungan hingga
+                                pantai,
+                                Lumajang menawarkan pengalaman wisata yang lengkap dan tak terlupakan.</p>
+
+                            <p>Keramahan masyarakat lokal, aksesibilitas yang semakin baik, dan fasilitas wisata yang terus
+                                berkembang membuat Lumajang menjadi destinasi yang tepat bagi wisatawan yang mencari
+                                petualangan
+                                autentik dengan kenyamanan modern.</p>
+
+                            <p>Dari sunrise di Gunung Bromo hingga pesona air terjun yang tersembunyi, setiap sudut Lumajang
+                                menyimpan kejutan dan keindahan yang siap memukau setiap pengunjung yang datang untuk
+                                menjelajahi keajaiban alam Indonesia.</p>
+                        </div>
+                    </div>
+
+                    <!-- Image Card Component -->
+                    <div class="relative transform lg:translate-x-35">
+                        <div class="enhanced-image-card w-120 h-80 ml-auto" style="border-radius:2rem 0 0 2rem;">
+                            <img src="{{ asset('storage/images/bg-landing-page.jpeg') }}" alt="Kenapa Lumajang"
+                                class="absolute inset-0 w-full h-full object-cover z-0"
+                                style="border-radius:2rem 0 0 2rem;">
+                            <div class="image-overlay" style="border-radius:2rem 0 0 2rem;">
+                                <div class="image-content">
+                                    <div class="image-icon">
+                                        <i class="fas fa-globe-asia"></i>
+                                    </div>
+                                    <h3 class="text-xl font-bold mb-2">Kenapa Lumajang?</h3>
+                                    <p class="text-sm opacity-90">Alam & Budaya yang Memikat</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <style>
-        .hide-scrollbar::-webkit-scrollbar {
-            display: none;
-        }
+        {{-- Destinations Carousel Section --}}
+        <section class="section-transition dynamic-bg w-full px-4 py-20 relative">
+            <div class="grid-pattern"></div>
+            <div class="floating-element float-2 left-[10%] bottom-[30%]"></div>
+            <div class="floating-element float-1 right-[15%] top-[20%]"></div>
 
-        .hide-scrollbar {
-            -ms-overflow-style: none;
-            scrollbar-width: none;
-        }
+            <div class="relative max-w-7xl mx-auto">
+                <!-- Enhanced Section Header -->
+                <div class="text-center mb-12 space-y-4">
+                    <span class="text-green-400 font-semibold text-sm tracking-widest uppercase block text-reveal">
+                        DESTINASI
+                    </span>
+                    <h2 class="text-4xl md:text-5xl font-bold text-white mb-4 text-reveal delay-1">
+                        Explore <span class="text-green-400">Amazing Destinations</span>
+                    </h2>
+                    <p class="text-lg text-gray-300 max-w-2xl mx-auto text-reveal delay-2">
+                        Discover breathtaking landscapes and unforgettable experiences in every corner of Lumajang
+                    </p>
+                    <!-- Decorative Line -->
+                    <div class="flex justify-center items-center gap-4 text-reveal delay-3">
+                        <div class="h-[1px] w-20 bg-gradient-to-r from-transparent via-green-400 to-transparent"></div>
+                        <i class="fas fa-compass text-green-400 text-xl animate-spin-slow"></i>
+                        <div class="h-[1px] w-20 bg-gradient-to-r from-transparent via-green-400 to-transparent"></div>
+                    </div>
+                </div>
 
-        /* Smooth transitions */
-        .destination-card {
-            transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
-            transition-property: transform, width, height, box-shadow;
-            transition-duration: 0.3s;
-            transition-timing-function: ease-out;
-        }
+                <!-- Enhanced Navigation Arrows -->
+                <button id="prevBtn"
+                    class="absolute left-0 top-1/2 -translate-y-1/2 z-20 bg-black/30 backdrop-blur-sm text-white rounded-full p-4 shadow-lg hover:bg-green-500/30 transition-all duration-300 -ml-4 group">
+                    <svg xmlns="http://www.w3.org/2000/svg"
+                        class="h-6 w-6 transform group-hover:-translate-x-1 transition-transform" fill="none"
+                        viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                    </svg>
+                </button>
 
-        /* Shadow khusus untuk card aktif */
-        .destination-card.active-shadow {
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.3),
-                0 0 15px rgba(0, 0, 0, 0.1);
-        }
+                <button id="nextBtn"
+                    class="absolute right-0 top-1/2 -translate-y-1/2 z-20 bg-black/30 backdrop-blur-sm text-white rounded-full p-4 shadow-lg hover:bg-green-500/30 transition-all duration-300 -mr-4 group">
+                    <svg xmlns="http://www.w3.org/2000/svg"
+                        class="h-6 w-6 transform group-hover:translate-x-1 transition-transform" fill="none"
+                        viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                    </svg>
+                </button>
 
-        /* Atau gunakan Tailwind arbitrary value */
-        .shadow-3d {
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3),
-                0 10px 10px -5px rgba(0, 0, 0, 0.1);
-        }
-    </style>
+                <!-- Cards Container -->
+                <div id="cardsContainer" class="overflow-x-auto py-8 px-12 hide-scrollbar scroll-smooth">
+                    <div class="flex items-center space-x-0 w-max mx-auto" id="cardsWrapper">
+                        @php
+                            $destinations = [
+                                [
+                                    'title' => 'Pacific Rim',
+                                    'subtitle' => 'Wild Pacific Coast',
+                                    'image' => 'https://source.unsplash.com/800x600/?pacific,coast',
+                                    'url' => '/destinations/pacific-rim',
+                                ],
+                                [
+                                    'title' => 'Vancouver',
+                                    'subtitle' => 'Urban Adventure',
+                                    'image' => 'https://source.unsplash.com/800x600/?vancouver,city',
+                                    'url' => '/destinations/vancouver',
+                                ],
+                                [
+                                    'title' => 'Victoria',
+                                    'subtitle' => 'British Columbia',
+                                    'image' => 'https://source.unsplash.com/800x600/?victoria,garden',
+                                    'url' => '/destinations/victoria',
+                                ],
+                                [
+                                    'title' => 'Calgary',
+                                    'subtitle' => 'Mountain Gateway',
+                                    'image' => 'https://source.unsplash.com/800x600/?calgary,mountain',
+                                    'url' => '/destinations/calgary',
+                                ],
+                                [
+                                    'title' => 'Whistler',
+                                    'subtitle' => 'Alpine Paradise',
+                                    'image' => 'https://source.unsplash.com/800x600/?whistler,ski',
+                                    'url' => '/destinations/whistler',
+                                ],
+                                [
+                                    'title' => 'Banff',
+                                    'subtitle' => 'Rocky Mountains',
+                                    'image' => 'https://source.unsplash.com/800x600/?banff,lake',
+                                    'url' => '/destinations/banff',
+                                ],
+                            ];
+                        @endphp
+
+                        @foreach ($destinations as $index => $destination)
+                            <x-destination-card :title="$destination['title']" :subtitle="$destination['subtitle']" :image="$destination['image']" :url="$destination['url']"
+                                :isActive="$index === 2" />
+                        @endforeach
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
 @endsection
 
 @push('script')
@@ -459,6 +1055,70 @@
                         updateActiveCard();
                     }
                 }, 100);
+            });
+
+            const scrollElements = document.querySelectorAll('.scroll-trigger');
+
+            const elementInView = (el, dividend = 1) => {
+                const elementTop = el.getBoundingClientRect().top;
+                return (
+                    elementTop <= (window.innerHeight || document.documentElement.clientHeight) / dividend
+                );
+            };
+
+            const displayScrollElement = (element) => {
+                element.classList.add('animate');
+            };
+
+            const hideScrollElement = (element) => {
+                element.classList.remove('animate');
+            };
+
+            const handleScrollAnimation = () => {
+                scrollElements.forEach((el) => {
+                    if (elementInView(el, 1.25)) {
+                        displayScrollElement(el);
+                    } else {
+                        hideScrollElement(el);
+                    }
+                });
+            }
+
+            window.addEventListener('scroll', () => {
+                handleScrollAnimation();
+            });
+
+            // Initial check
+            handleScrollAnimation();
+
+            // Reveal animations on scroll
+            const revealElements = document.querySelectorAll('.text-reveal');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+
+            revealElements.forEach(el => observer.observe(el));
+
+            // Smooth scroll for navigation
+            document.querySelector('.scroll-indicator').addEventListener('click', (e) => {
+                e.preventDefault();
+                const aboutSection = document.querySelector('.about-section');
+                aboutSection.scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+
+            // Parallax effect for hero section
+            window.addEventListener('scroll', () => {
+                const scrolled = window.pageYOffset;
+                const hero = document.querySelector('.hero-bg');
+                hero.style.backgroundPositionY = `${scrolled * 0.5}px`;
             });
         });
     </script>
