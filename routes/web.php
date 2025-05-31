@@ -9,3 +9,7 @@ Route::get('/', function () {
 Route::get('/wisata', function () {
     return view('welcome.landing');
 });
+
+Route::get('/booking', function () {
+    return view('booking-page.booking-page');
+});
