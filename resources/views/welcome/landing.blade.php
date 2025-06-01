@@ -855,49 +855,10 @@
                 <!-- Cards Container -->
                 <div id="cardsContainer" class="overflow-x-auto py-8 px-12 hide-scrollbar scroll-smooth">
                     <div class="flex items-center space-x-0 w-max mx-auto" id="cardsWrapper">
-                        @php
-                            $destinations = [
-                                [
-                                    'title' => 'Pacific Rim',
-                                    'subtitle' => 'Wild Pacific Coast',
-                                    'image' => 'https://source.unsplash.com/800x600/?pacific,coast',
-                                    'url' => '/destinations/pacific-rim',
-                                ],
-                                [
-                                    'title' => 'Vancouver',
-                                    'subtitle' => 'Urban Adventure',
-                                    'image' => 'https://source.unsplash.com/800x600/?vancouver,city',
-                                    'url' => '/destinations/vancouver',
-                                ],
-                                [
-                                    'title' => 'Victoria',
-                                    'subtitle' => 'British Columbia',
-                                    'image' => 'https://source.unsplash.com/800x600/?victoria,garden',
-                                    'url' => '/destinations/victoria',
-                                ],
-                                [
-                                    'title' => 'Calgary',
-                                    'subtitle' => 'Mountain Gateway',
-                                    'image' => 'https://source.unsplash.com/800x600/?calgary,mountain',
-                                    'url' => '/destinations/calgary',
-                                ],
-                                [
-                                    'title' => 'Whistler',
-                                    'subtitle' => 'Alpine Paradise',
-                                    'image' => 'https://source.unsplash.com/800x600/?whistler,ski',
-                                    'url' => '/destinations/whistler',
-                                ],
-                                [
-                                    'title' => 'Banff',
-                                    'subtitle' => 'Rocky Mountains',
-                                    'image' => 'https://source.unsplash.com/800x600/?banff,lake',
-                                    'url' => '/destinations/banff',
-                                ],
-                            ];
-                        @endphp
-
                         @foreach ($destinations as $index => $destination)
-                            <x-destination-card :title="$destination['title']" :subtitle="$destination['subtitle']" :image="$destination['image']" :url="$destination['url']"
+                            <x-destination-card :title="$destination->nama" :lokasi="$destination->lokasi" :image="$destination->gambarWisata->first()
+                                ? asset('storage/' . $destination->gambarWisata->first()->path_gambar)
+                                : asset('storage/images/default-wisata.jpg')" :url="route('wisata.detail', $destination->id)"
                                 :isActive="$index === 2" />
                         @endforeach
                     </div>

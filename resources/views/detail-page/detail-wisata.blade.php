@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tumpak Sewu - Detail Wisata</title>
+    <title>{{ $wisata->nama }} - Detail Wisata</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
@@ -18,37 +18,40 @@
 
         /* Back Button Animation */
         .back-btn {
-            transition: all 0.4s cubic-bezier(0.68, -0.6, 0.32, 1.6);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
         }
 
         .back-btn:hover {
             transform: translateX(-4px);
             box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+            background: rgba(255, 255, 255, 0.15);
         }
 
         /* Image Grid Effects */
         .image-grid-item {
-            transition: all 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
-            transform-style: preserve-3d;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
         }
 
         .image-grid-item:hover {
-            transform: scale(1.03) translateY(-5px);
+            transform: translateY(-5px);
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
         }
 
-        .image-grid-item::before {
+        .image-grid-item::after {
             content: '';
             position: absolute;
             inset: 0;
-            background: linear-gradient(135deg, rgba(16, 185, 129, 0.3) 0%, rgba(5, 150, 105, 0.1) 100%);
+            background: linear-gradient(45deg,
+                    rgba(16, 185, 129, 0.2),
+                    rgba(59, 130, 246, 0.2));
             opacity: 0;
-            transition: opacity 0.4s ease;
-            z-index: 1;
+            transition: all 0.4s ease;
         }
 
-        .image-grid-item:hover::before {
+        .image-grid-item:hover::after {
             opacity: 1;
         }
 
@@ -246,19 +249,82 @@
             }
         }
 
-        /* Background Styles */
+        /* Enhanced Background Effects */
         .bg-gradient-radial {
             background: radial-gradient(circle at center,
                     rgba(15, 23, 42, 0.95) 0%,
                     rgba(2, 6, 23, 0.98) 100%);
         }
 
-        .bg-grid-pattern {
-            background-image:
-                linear-gradient(rgba(16, 185, 129, 0.05) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(16, 185, 129, 0.05) 1px, transparent 1px);
-            background-size: 50px 50px;
-            animation: gridMove 20s linear infinite;
+        .floating-blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.4;
+            pointer-events: none;
+        }
+
+        .blob-1 {
+            width: 400px;
+            height: 400px;
+            background: linear-gradient(45deg, #10b981, #3b82f6);
+            top: 10%;
+            left: -5%;
+            animation: float-blob1 20s infinite ease-in-out;
+        }
+
+        .blob-2 {
+            width: 300px;
+            height: 300px;
+            background: linear-gradient(45deg, #8b5cf6, #ec4899);
+            top: 40%;
+            right: -5%;
+            animation: float-blob2 25s infinite ease-in-out;
+        }
+
+        .blob-3 {
+            width: 250px;
+            height: 250px;
+            background: linear-gradient(45deg, #f59e0b, #ef4444);
+            bottom: 10%;
+            left: 30%;
+            animation: float-blob3 22s infinite ease-in-out;
+        }
+
+        @keyframes float-blob1 {
+
+            0%,
+            100% {
+                transform: translate(0, 0) rotate(0deg);
+            }
+
+            50% {
+                transform: translate(30px, 50px) rotate(180deg);
+            }
+        }
+
+        @keyframes float-blob2 {
+
+            0%,
+            100% {
+                transform: translate(0, 0) rotate(0deg);
+            }
+
+            50% {
+                transform: translate(-40px, -30px) rotate(-180deg);
+            }
+        }
+
+        @keyframes float-blob3 {
+
+            0%,
+            100% {
+                transform: translate(0, 0) rotate(0deg);
+            }
+
+            50% {
+                transform: translate(20px, -40px) rotate(90deg);
+            }
         }
 
         /* Floating Elements */
@@ -346,252 +412,163 @@
 </head>
 
 <body class="relative overflow-x-hidden">
-    <!-- Water Sound Wave Background -->
-    <div class="sound-wave"></div>
-
-    <!-- Floating Water Drops -->
-    <div class="water-drop" style="width: 100px; height: 100px; top: 10%; left: 5%; animation-delay: 0s;"></div>
-    <div class="water-drop" style="width: 80px; height: 80px; top: 30%; right: 8%; animation-delay: 1s;"></div>
-    <div class="water-drop" style="width: 60px; height: 60px; top: 70%; left: 10%; animation-delay: 2s;"></div>
-    <div class="water-drop" style="width: 120px; height: 120px; bottom: 10%; right: 5%; animation-delay: 3s;"></div>
-
-    <!-- Back Button with Enhanced Animation -->
+    <!-- Back Button -->
     <button onclick="history.back()"
-        class="fixed top-6 left-6 bg-black/20 backdrop-blur-md text-white px-4 py-3 rounded-full hover:bg-black/40 transition-all duration-300 flex items-center gap-2 back-btn shadow-lg z-50">
+        class="fixed top-6 left-6 z-50 back-btn bg-white/10 backdrop-blur-md text-white px-4 py-2 rounded-full flex items-center gap-2 hover:bg-white/20">
         <i class="fas fa-arrow-left"></i>
-        <span class="font-medium">Kembali</span>
+        <span class="text-sm font-medium">Kembali</span>
     </button>
 
-    <!-- Unified Grid and Content Section -->
-    <div class="relative min-h-screen overflow-hidden">
-        <!-- Unified Background Elements -->
-        <div class="fixed inset-0 z-0">
-            <div class="absolute inset-0 bg-gradient-radial from-gray-900 via-gray-900 to-black"></div>
-            <div class="absolute inset-0 bg-grid-pattern opacity-10"></div>
-            <!-- Floating Elements -->
-            <div class="floating-element float-1"></div>
-            <div class="floating-element float-2"></div>
-            <div class="floating-element float-3"></div>
-        </div>
+    <!-- Animated Background Elements -->
+    <div class="fixed inset-0 z-0">
+        <div class="absolute inset-0 bg-gradient-radial"></div>
+        <div class="absolute inset-0 bg-grid-pattern opacity-10"></div>
+        <div class="floating-blob blob-1"></div>
+        <div class="floating-blob blob-2"></div>
+        <div class="floating-blob blob-3"></div>
+    </div>
 
-        <!-- Main Content Wrapper -->
-        <div class="relative z-10">
-            <!-- Image Grid Section -->
-            <div class="relative overflow-hidden">
-                <!-- Desktop Grid -->
-                <div class="hidden md:grid grid-cols-12 gap-4 h-[600px] container mx-auto px-6 pt-24">
-                    <!-- Main Large Image -->
-                    <div class="col-span-8 relative group overflow-hidden rounded-2xl image-grid-item">
-                        <img src="{{ asset('storage/images/bg-landing-page.jpeg') }}" alt="Tumpak Sewu Main"
-                            class="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-110">
-                        <div
-                            class="absolute inset-0 bg-gradient-to-b from-transparent to-black/50 transition-opacity duration-700 group-hover:opacity-0">
-                        </div>
-                    </div>
-
-                    <!-- Right Side Grid -->
-                    <div class="col-span-4 grid grid-rows-2 gap-4">
-                        <!-- Top Two Images -->
-                        <div class="grid grid-cols-2 gap-4">
-                            <div class="relative group overflow-hidden rounded-xl image-grid-item">
-                                <img src="{{ asset('storage/images/bg-landing-page.jpeg') }}" alt="Tumpak Sewu Detail 1"
-                                    class="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-110">
-                                <div
-                                    class="absolute inset-0 bg-gradient-to-b from-transparent to-black/50 transition-opacity duration-700 group-hover:opacity-0">
-                                </div>
-                            </div>
-                            <div class="relative group overflow-hidden rounded-xl image-grid-item">
-                                <img src="{{ asset('storage/images/bg-landing-page.jpeg') }}" alt="Tumpak Sewu Detail 2"
-                                    class="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-110">
-                                <div
-                                    class="absolute inset-0 bg-gradient-to-b from-transparent to-black/50 transition-opacity duration-700 group-hover:opacity-0">
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Bottom Image with View All Button -->
-                        <div class="relative group overflow-hidden rounded-xl image-grid-item">
-                            <img src="{{ asset('storage/images/bg-landing-page.jpeg') }}" alt="Tumpak Sewu Detail 3"
-                                class="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-110">
-                            <div
-                                class="absolute inset-0 bg-black/50 group-hover:bg-black/70 transition-all duration-500 flex items-center justify-center">
-                                <button
-                                    class="view-all-btn px-6 py-3 rounded-lg border border-white/20 text-white flex items-center gap-2">
-                                    <i class="fas fa-images"></i>
-                                    <span>View All Photos</span>
-                                </button>
-                            </div>
-                        </div>
+    <!-- Main Content Wrapper -->
+    <div class="relative z-10">
+        <!-- Image Grid Section -->
+        <div class="relative overflow-hidden">
+            <!-- Desktop Grid -->
+            <div class="hidden md:grid grid-cols-12 gap-6 h-[600px] container mx-auto px-8 pt-24">
+                <!-- Main Large Image -->
+                <div class="col-span-7 relative group overflow-hidden rounded-3xl image-grid-item">
+                    <img src="{{ $wisata->gambarWisata->first() ? asset('storage/' . $wisata->gambarWisata->first()->path_gambar) : asset('storage/images/default-wisata.jpg') }}"
+                        alt="{{ $wisata->nama }} "
+                        class="w-full h-full object-cover transform transition-all duration-700 hover:scale-110">
+                    <div
+                        class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-100 group-hover:opacity-0 transition-opacity duration-500">
                     </div>
                 </div>
 
-                <!-- Mobile Carousel -->
-                <div class="md:hidden relative h-[400px] rounded-2xl overflow-hidden container mx-auto px-6 pt-24">
-                    <div class="swiper mySwiper h-full w-full">
-                        <div class="swiper-wrapper">
-                            <!-- Slide 1 -->
-                            <div class="swiper-slide relative">
-                                <img src="{{ asset('storage/images/bg-landing-page.jpeg') }}" alt="Tumpak Sewu Main"
-                                    class="w-full h-full object-cover">
-                                <div class="absolute inset-0 bg-gradient-to-b from-transparent to-black/50"></div>
+                <!-- Right Side Grid -->
+                <div class="col-span-5 grid grid-rows-2 gap-6">
+                    <!-- Top Two Images -->
+                    <div class="grid grid-cols-2 gap-6">
+                        @foreach ($wisata->gambarWisata->skip(1)->take(2) as $gambar)
+                            <div class="relative group overflow-hidden rounded-2xl image-grid-item">
+                                <img src="{{ asset('storage/' . $gambar->path_gambar) }}" alt="{{ $wisata->nama }}"
+                                    class="w-full h-full object-cover transform transition-all duration-700 hover:scale-110">
+                                <div
+                                    class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-100 group-hover:opacity-0 transition-opacity duration-500">
+                                </div>
                             </div>
-                            <!-- Slide 2 -->
-                            <div class="swiper-slide relative">
-                                <img src="{{ asset('storage/images/bg-landing-page.jpeg') }}" alt="Tumpak Sewu Detail 1"
-                                    class="w-full h-full object-cover">
-                                <div class="absolute inset-0 bg-gradient-to-b from-transparent to-black/50"></div>
-                            </div>
-                            <!-- Slide 3 -->
-                            <div class="swiper-slide relative">
-                                <img src="{{ asset('storage/images/bg-landing-page.jpeg') }}" alt="Tumpak Sewu Detail 2"
-                                    class="w-full h-full object-cover">
-                                <div class="absolute inset-0 bg-gradient-to-b from-transparent to-black/50"></div>
-                            </div>
-                            <!-- Slide 4 -->
-                            <div class="swiper-slide relative">
-                                <img src="{{ asset('storage/images/bg-landing-page.jpeg') }}" alt="Tumpak Sewu Detail 3"
-                                    class="w-full h-full object-cover">
-                                <div class="absolute inset-0 bg-gradient-to-b from-transparent to-black/50"></div>
-                            </div>
+                        @endforeach
+                    </div>
+                    <!-- View All Photos Button -->
+                    <div class="relative group overflow-hidden rounded-2xl image-grid-item">
+                        <img src="{{ $wisata->gambarWisata->skip(3)->first() ? asset('storage/' . $wisata->gambarWisata->skip(3)->first()->path_gambar) : asset('storage/images/default-wisata.jpg') }}"
+                            alt="{{ $wisata->nama }}" class="w-full h-full object-cover">
+                        <div
+                            class="absolute inset-0 bg-black/60 backdrop-blur-[2px] group-hover:bg-black/70 transition-all duration-500 flex items-center justify-center">
+                            <button
+                                class="view-all-btn px-6 py-3 rounded-xl border border-white/20 text-white flex items-center gap-3 transform hover:scale-105 transition-all duration-300">
+                                <i class="fas fa-images text-lg"></i>
+                                <span class="font-medium">View All Photos</span>
+                            </button>
                         </div>
-                        <!-- Add Navigation -->
-                        <div class="swiper-button-next !z-20"></div>
-                        <div class="swiper-button-prev !z-20"></div>
-                        <!-- Add Pagination -->
-                        <div class="swiper-pagination !z-20"></div>
                     </div>
                 </div>
             </div>
 
-            <!-- Content Section -->
-            <div class="container mx-auto px-6 py-12">
-                <div class="content-card rounded-2xl border border-white/10 p-8 mb-8 bg-white/5 backdrop-blur-md">
-                    <!-- Title & Basic Info -->
-                    <div class="flex flex-wrap justify-between items-start mb-8 fade-in delay-1">
-                        <div>
-                            <h1
-                                class="text-4xl md:text-5xl font-bold text-white mb-4 bg-clip-text text-transparent bg-gradient-to-r from-green-400 to-emerald-600">
-                                Tumpak Sewu Waterfall
-                            </h1>
-                            <div class="flex flex-wrap items-center gap-4 text-gray-300">
-                                <div class="flex items-center">
-                                    <i class="fas fa-map-marker-alt text-green-400 mr-2"></i>
-                                    <span>Lumajang, Jawa Timur</span>
-                                </div>
-                                <div class="flex items-center">
-                                    <i class="fas fa-star text-green-400 mr-2"></i>
-                                    <span>4.8 (2.4k reviews)</span>
-                                </div>
-                                <div class="flex items-center">
-                                    <i class="fas fa-water text-green-400 mr-2"></i>
-                                    <span>120m Height</span>
-                                </div>
+            <!-- Mobile Carousel -->
+            <div class="md:hidden relative h-[400px] rounded-2xl overflow-hidden container mx-auto px-6 pt-24">
+                <div class="swiper mySwiper h-full w-full">
+                    <div class="swiper-wrapper">
+                        @foreach ($wisata->gambarWisata as $gambar)
+                            <div class="swiper-slide relative">
+                                <img src="{{ asset('storage/' . $gambar->path_gambar) }}" alt="{{ $wisata->nama }}"
+                                    class="w-full h-full object-cover">
+                                <div class="absolute inset-0 bg-gradient-to-b from-transparent to-black/50"></div>
                             </div>
-                        </div>
-                        <div
-                            class="price-tag bg-green-500/90 backdrop-blur-sm text-white px-6 py-3 rounded-xl text-lg font-semibold mt-4 md:mt-0">
-                            Rp 150.000
-                        </div>
+                        @endforeach
                     </div>
-
-                    <!-- Description with Animated Underline -->
-                    <div class="prose prose-invert max-w-none mb-8 fade-in delay-2">
-                        <h2 class="text-2xl font-semibold text-white mb-4 relative inline-block">
-                            Tentang Wisata
-                            <span
-                                class="absolute bottom-0 left-0 w-full h-0.5 bg-green-400 transform scale-x-0 origin-left transition-transform duration-500 group-hover:scale-x-100"></span>
-                        </h2>
-                        <p class="text-gray-300 leading-relaxed">
-                            Air Terjun Tumpak Sewu atau juga dikenal sebagai Air Terjun Coban Sewu adalah sebuah air
-                            terjun
-                            yang terletak di Desa Sidomulyo, Kecamatan Pronojiwo, Kabupaten Lumajang, Jawa Timur. Dengan
-                            ketinggian sekitar 120 meter, air terjun ini merupakan air terjun terindah di Pulau Jawa dan
-                            Indonesia.
-                        </p>
-                        <p class="text-gray-300 leading-relaxed mt-4">
-                            Dinamakan "Tumpak Sewu" yang berarti serumpun seribu, air terjun ini memiliki keunikan
-                            berupa aliran
-                            air yang terpecah menjadi banyak rumpun, menciptakan pemandangan yang spektakuler terutama
-                            di musim
-                            hujan.
-                        </p>
-                    </div>
-
-                    <!-- Operating Hours & Features with Enhanced Cards -->
-                    <div class="grid md:grid-cols-2 gap-8 mb-8">
-                        <div class="bg-white/5 rounded-xl p-6 fade-in delay-3 hover-lift border border-white/10">
-                            <h3 class="text-xl font-semibold text-white mb-4 flex items-center">
-                                <i class="fas fa-clock text-green-400 mr-3"></i>
-                                Jam Operasional
-                            </h3>
-                            <div class="space-y-3 text-gray-300">
-                                <div class="flex justify-between items-center py-2 border-b border-white/10">
-                                    <span class="flex items-center">
-                                        <i class="fas fa-calendar-day text-green-400 mr-2"></i>
-                                        Senin - Jumat
-                                    </span>
-                                    <span class="bg-green-900/30 px-3 py-1 rounded-full">07:00 - 16:00</span>
-                                </div>
-                                <div class="flex justify-between items-center py-2 text-green-400">
-                                    <span class="flex items-center">
-                                        <i class="fas fa-calendar-weekend text-green-400 mr-2"></i>
-                                        Sabtu - Minggu
-                                    </span>
-                                    <span class="bg-green-900/30 px-3 py-1 rounded-full">06:00 - 17:00</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="bg-white/5 rounded-xl p-6 fade-in delay-3 hover-lift border border-white/10">
-                            <h3 class="text-xl font-semibold text-white mb-4 flex items-center">
-                                <i class="fas fa-umbrella-beach text-green-400 mr-3"></i>
-                                Fasilitas
-                            </h3>
-                            <div class="grid grid-cols-2 gap-4 text-gray-300">
-                                <div class="flex items-center bg-white/5 p-3 rounded-lg">
-                                    <i class="fas fa-parking text-green-400 mr-3"></i>
-                                    <span>Parkir Luas</span>
-                                </div>
-                                <div class="flex items-center bg-white/5 p-3 rounded-lg">
-                                    <i class="fas fa-restroom text-green-400 mr-3"></i>
-                                    <span>Toilet Bersih</span>
-                                </div>
-                                <div class="flex items-center bg-white/5 p-3 rounded-lg">
-                                    <i class="fas fa-mosque text-green-400 mr-3"></i>
-                                    <span>Musholla</span>
-                                </div>
-                                <div class="flex items-center bg-white/5 p-3 rounded-lg">
-                                    <i class="fas fa-store text-green-400 mr-3"></i>
-                                    <span>Warung Makan</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Location Map with Floating Pin -->
-                    <div class="mb-8 fade-in delay-4">
-                        <h3 class="text-2xl font-semibold text-white mb-4 flex items-center">
-                            <i class="fas fa-map-marked-alt text-green-400 mr-3"></i>
-                            Lokasi
-                        </h3>
-                        <div class="bg-white/5 rounded-xl overflow-hidden h-[400px] relative border border-white/10">
-                            <iframe
-                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3945.5!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd63e1aaaaaaaa%3A0x8e2783c5e12e7c!2sTumpak%20Sewu%20Waterfall!5e0!3m2!1sen!2sid!4v1625812345678!5m2!1sen!2sid"
-                                width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy">
-                            </iframe>
-                            <div
-                                class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-red-500 text-4xl animate-bounce">
-                                <i class="fas fa-map-pin"></i>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Booking Button with Enhanced Animation -->
-                    <button
-                        class="w-full booking-btn text-white py-4 rounded-xl text-lg font-semibold
-                 transition-all duration-300 flex items-center justify-center gap-2 fade-in delay-4 hover-lift">
-                        <span>Booking Sekarang</span>
-                        <i class="fas fa-arrow-right transition-transform duration-300 group-hover:translate-x-1"></i>
-                    </button>
+                    <div class="swiper-button-next !z-20"></div>
+                    <div class="swiper-button-prev !z-20"></div>
+                    <div class="swiper-pagination !z-20"></div>
                 </div>
+            </div>
+        </div>
+
+        <!-- Content Section -->
+        <div class="container mx-auto px-6 py-12">
+            <div class="content-card rounded-2xl border border-white/10 p-8 mb-8 bg-white/5 backdrop-blur-md">
+                <!-- Title & Basic Info -->
+                <div class="flex flex-wrap justify-between items-start mb-8 fade-in delay-1">
+                    <div>
+                        <h1
+                            class="text-4xl md:text-5xl font-bold text-white mb-4 bg-clip-text text-transparent bg-gradient-to-r from-green-400 to-emerald-600">
+                            {{ $wisata->nama }}
+                        </h1>
+                        <div class="flex flex-wrap items-center gap-4 text-gray-300">
+                            <div class="flex items-center">
+                                <i class="fas fa-map-marker-alt text-green-400 mr-2"></i>
+                                <span>{{ $wisata->lokasi }}</span>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fas fa-tag text-green-400 mr-2"></i>
+                                <span>{{ $wisata->kategori->nama_kategori }}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div
+                        class="price-tag bg-green-500/90 backdrop-blur-sm text-white px-6 py-3 rounded-xl text-lg font-semibold mt-4 md:mt-0">
+                        Rp {{ number_format($wisata->harga_tiket, 0, ',', '.') }}
+                    </div>
+                </div>
+
+                <!-- Description -->
+                <div class="prose prose-invert max-w-none mb-8 fade-in delay-2">
+                    <h2 class="text-2xl font-semibold text-white mb-4 relative inline-block">
+                        Tentang Wisata
+                    </h2>
+                    <p class="text-gray-300 leading-relaxed">
+                        {{ $wisata->deskripsi }}
+                    </p>
+                </div>
+
+                <!-- Operating Hours -->
+                <div class="grid md:grid-cols-2 gap-8 mb-8">
+                    <div class="bg-white/5 rounded-xl p-6 fade-in delay-3 hover-lift border border-white/10">
+                        <h3 class="text-xl font-semibold text-white mb-4 flex items-center">
+                            <i class="fas fa-clock text-green-400 mr-3"></i>
+                            Jam Operasional
+                        </h3>
+                        <div class="space-y-3 text-gray-300">
+                            <div class="flex justify-between items-center py-2 border-b border-white/10">
+                                <span class="flex items-center">
+                                    <i class="fas fa-calendar-day text-green-400 mr-2"></i>
+                                    Jam Buka
+                                </span>
+                                <span
+                                    class="bg-green-900/30 px-3 py-1 rounded-full">{{ $wisata->jam_operasional }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Location Map -->
+                <div class="mb-8 fade-in delay-4">
+                    <h3 class="text-2xl font-semibold text-white mb-4 flex items-center">
+                        <i class="fas fa-map-marked-alt text-green-400 mr-3"></i>
+                        Lokasi
+                    </h3>
+                    <div class="bg-white/5 rounded-xl overflow-hidden h-[400px] relative border border-white/10">
+                        <iframe src="{{ $wisata->link_maps }}" width="100%" height="100%" style="border:0;"
+                            allowfullscreen="" loading="lazy">
+                        </iframe>
+                    </div>
+                </div>
+
+                <!-- Booking Button -->
+                <button
+                    class="w-full booking-btn text-white py-4 rounded-xl text-lg font-semibold transition-all duration-300 flex items-center justify-center gap-2 fade-in delay-4 hover-lift">
+                    <span>Booking Sekarang</span>
+                    <i class="fas fa-arrow-right"></i>
+                </button>
             </div>
         </div>
     </div>
