@@ -35,4 +35,9 @@ class TempatWisata extends Model
     {
         return $this->hasMany(Transaksi::class, 'wisata_id');
     }
+
+    public function kategori()
+    {
+        return $this->belongsTo(KategoriWisata::class, 'kategori_id');
+    }
 }
