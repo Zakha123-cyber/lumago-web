@@ -17,3 +17,7 @@ Route::get('/booking', function () {
 Route::get('/detail', function () {
     return view('detail-page.detail-wisata');
 });
+
+Route::get('/profil', function () {
+    return view('profile-page.profile-page');
+});
