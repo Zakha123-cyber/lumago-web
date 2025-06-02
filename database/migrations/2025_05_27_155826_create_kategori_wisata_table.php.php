@@ -9,21 +9,21 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
+    public function up()
     {
-        Schema::create('gambar_wisata', function (Blueprint $table) {
+        Schema::create('kategori_wisata', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('wisata_id')->constrained('tempat_wisata')->onDelete('cascade');
-            $table->text('path_gambar');
+            $table->string('nama_kategori');
             $table->timestamps();
         });
     }
 
+
     /**
      * Reverse the migrations.
      */
-    public function down(): void
+    public function down()
     {
-        Schema::dropIfExists('gambar_wisata');
+        Schema::dropIfExists('kategori_wisata');
     }
 };

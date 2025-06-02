@@ -26,13 +26,18 @@ class TempatWisata extends Model
         return $this->belongsTo(User::class, 'admin_id');
     }
 
-    public function gambar()
+    public function gambarWisata()
     {
-        return $this->hasMany(GambarWisata::class, 'wisata_id');
+        return $this->hasMany(\App\Models\GambarWisata::class, 'wisata_id');
     }
 
     public function transaksi()
     {
         return $this->hasMany(Transaksi::class, 'wisata_id');
+    }
+
+    public function kategori()
+    {
+        return $this->belongsTo(\App\Models\KategoriWisata::class, 'kategori_id');
     }
 }
