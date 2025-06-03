@@ -604,20 +604,20 @@
 
 @section('content')
     <!-- Hero Section -->
-    <section id="home" class="hero-bg min-h-screen flex items-center relative overflow-hidden">
+    <section id="home" class="relative flex items-center min-h-screen overflow-hidden hero-bg">
         <div class="absolute inset-0 bg-gradient-to-r from-green-800/40 to-green-600/20"></div>
-        <div class="container mx-auto px-6 relative z-10">
+        <div class="container relative z-10 px-6 mx-auto">
             <div class="max-w-4xl">
-                <h1 class="text-5xl md:text-7xl font-bold text-white mb-6 floating-animation text-reveal">
+                <h1 class="mb-6 text-5xl font-bold text-white md:text-7xl floating-animation text-reveal">
                     It's Great Time<br>
                     to Start your <span class="text-green-400">Journey Now</span>
                 </h1>
-                <p class="text-xl text-gray-200 mb-8 max-w-2xl text-reveal delay-1">
+                <p class="max-w-2xl mb-8 text-xl text-gray-200 text-reveal delay-1">
                     Jelajahi keindahan alam Indonesia dengan pengalaman yang tak terlupakan. Booking mudah, perjalanan
                     hebat!
                 </p>
-                <button class="btn-primary text-white px-8 py-4 rounded-full text-lg font-semibold text-reveal delay-2">
-                    Mulai Petualangan <i class="fas fa-arrow-right ml-2"></i>
+                <button class="px-8 py-4 text-lg font-semibold text-white rounded-full btn-primary text-reveal delay-2">
+                    Mulai Petualangan <i class="ml-2 fas fa-arrow-right"></i>
                 </button>
             </div>
         </div>
@@ -626,7 +626,7 @@
     <!-- Wrap all main content sections -->
     <div class="section-wrapper">
         <!-- About Section -->
-        <section class="section-transition dynamic-bg py-20 relative">
+        <section class="relative py-20 section-transition dynamic-bg">
             <div class="grid-pattern"></div>
             <div class="floating-element float-1 left-[10%] top-[20%]"></div>
             <div class="floating-element float-2 right-[15%] bottom-[30%]"></div>
@@ -643,17 +643,17 @@
                 <div class="particle"></div>
             </div>
 
-            <div class="container mx-auto px-6 relative z-10">
-                <div class="grid lg:grid-cols-2 gap-12 items-center">
+            <div class="container relative z-10 px-6 mx-auto">
+                <div class="grid items-center gap-12 lg:grid-cols-2">
                     <!-- Text Content -->
                     <div class="text-white scroll-trigger">
-                        <span class="text-green-400 font-semibold text-sm tracking-widest uppercase mb-4 block text-reveal">
+                        <span class="block mb-4 text-sm font-semibold tracking-widest text-green-400 uppercase text-reveal">
                             ABOUT
                         </span>
-                        <h2 class="text-5xl font-bold mb-8 about-title text-reveal delay-1">
+                        <h2 class="mb-8 text-5xl font-bold about-title text-reveal delay-1">
                             LUMAGO!
                         </h2>
-                        <div class="space-y-4 text-gray-300 leading-relaxed">
+                        <div class="space-y-4 leading-relaxed text-gray-300">
                             <p class="text-reveal delay-2">
                                 Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut
                                 labore
@@ -686,16 +686,16 @@
 
                     <!-- Enhanced Image Card Component -->
                     <div class="relative transform lg:translate-x-35 scroll-trigger from-right">
-                        <div class="enhanced-image-card w-120 h-80 ml-auto" style="border-radius:2rem 0 0 2rem;">
+                        <div class="ml-auto enhanced-image-card w-120 h-80" style="border-radius:2rem 0 0 2rem;">
                             <img src="{{ asset('storage/images/bg-landing-page.jpeg') }}" alt="About Image"
-                                class="absolute inset-0 w-full h-full object-cover z-0"
+                                class="absolute inset-0 z-0 object-cover w-full h-full"
                                 style="border-radius:2rem 0 0 2rem;">
                             <div class="image-overlay" style="border-radius:2rem 0 0 2rem;">
                                 <div class="image-content">
                                     <div class="image-icon">
                                         <i class="fas fa-mountain"></i>
                                     </div>
-                                    <h3 class="text-xl font-bold mb-2">Adventure Awaits</h3>
+                                    <h3 class="mb-2 text-xl font-bold">Adventure Awaits</h3>
                                     <p class="text-sm opacity-90">Discover the beauty of nature</p>
                                 </div>
                             </div>
@@ -706,36 +706,36 @@
         </section>
 
         <!-- Wisata Lumajang Section -->
-        <section class="section-transition dynamic-bg py-20 relative">
+        <section class="relative py-20 section-transition dynamic-bg">
             <div class="grid-pattern"></div>
             <div class="floating-element float-2 left-[20%] bottom-[20%]"></div>
             <div class="floating-element float-1 right-[10%] top-[30%]"></div>
 
-            <div class="container mx-auto px-6">
-                <div class="grid lg:grid-cols-2 gap-12 items-center">
+            <div class="container px-6 mx-auto">
+                <div class="grid items-center gap-12 lg:grid-cols-2">
                     <!-- Image Card Component -->
                     <div class="relative transform lg:-translate-x-35">
-                        <div class="enhanced-image-card w-120 h-80 ml-0 lg:mr-auto" style="border-radius:0 2rem 2rem 0;">
+                        <div class="ml-0 enhanced-image-card w-120 h-80 lg:mr-auto" style="border-radius:0 2rem 2rem 0;">
                             <img src="{{ asset('storage/images/bg-landing-page.jpeg') }}" alt="Wisata Image"
-                                class="absolute inset-0 w-full h-full object-cover z-0"
+                                class="absolute inset-0 z-0 object-cover w-full h-full"
                                 style="border-radius:0 2rem 2rem 0;">
                             <div class="image-overlay" style="border-radius:0 2rem 2rem 0;">
                                 <div class="image-content">
                                     <div class="image-icon">
                                         <i class="fas fa-tree"></i>
                                     </div>
-                                    <h3 class="text-xl font-bold mb-2">Wisata Alam</h3>
+                                    <h3 class="mb-2 text-xl font-bold">Wisata Alam</h3>
                                     <p class="text-sm opacity-90">Keindahan alam Lumajang</p>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <!-- Text Content -->
-                    <div class="text-white order-1 lg:order-2">
+                    <div class="order-1 text-white lg:order-2">
                         <span
-                            class="text-green-400 font-semibold text-sm tracking-widest uppercase mb-4 block">WISATA</span>
-                        <h2 class="text-5xl font-bold mb-8">LUMAJANG</h2>
-                        <div class="space-y-4 text-gray-300 leading-relaxed">
+                            class="block mb-4 text-sm font-semibold tracking-widest text-green-400 uppercase">WISATA</span>
+                        <h2 class="mb-8 text-5xl font-bold">LUMAJANG</h2>
+                        <div class="space-y-4 leading-relaxed text-gray-300">
                             <p>Kabupat Lumajang memiliki potensi keindahan alam yang luar biasa dan masih asli. Mulai dari
                                 pegunungan hingga laut, hampir semua yang ada di Indonesia, Anda bisa menemukan berbagai
                                 destinasi Kota Lumajang yang memiliki daya tarik tersendiri.</p>
@@ -757,19 +757,19 @@
         </section>
 
         <!-- Kenapa Lumajang Section -->
-        <section class="section-transition dynamic-bg py-20 relative">
+        <section class="relative py-20 section-transition dynamic-bg">
             <div class="grid-pattern"></div>
             <div class="floating-element float-1 left-[15%] top-[30%]"></div>
             <div class="floating-element float-2 right-[20%] bottom-[20%]"></div>
 
-            <div class="container mx-auto px-6">
-                <div class="grid lg:grid-cols-2 gap-12 items-center">
+            <div class="container px-6 mx-auto">
+                <div class="grid items-center gap-12 lg:grid-cols-2">
                     <!-- Text Content -->
                     <div class="text-white">
                         <span
-                            class="text-green-400 font-semibold text-sm tracking-widest uppercase mb-4 block">KENAPA</span>
-                        <h2 class="text-5xl font-bold mb-8">LUMAJANG</h2>
-                        <div class="space-y-4 text-gray-300 leading-relaxed">
+                            class="block mb-4 text-sm font-semibold tracking-widest text-green-400 uppercase">KENAPA</span>
+                        <h2 class="mb-8 text-5xl font-bold">LUMAJANG</h2>
+                        <div class="space-y-4 leading-relaxed text-gray-300">
                             <p>Lumajang memiliki kombinasi yang sempurna antara keindahan alam yang menakjubkan dan kekayaan
                                 budaya lokal yang masih terjaga. Dengan beragam destinasi mulai dari pegunungan hingga
                                 pantai,
@@ -788,16 +788,16 @@
 
                     <!-- Image Card Component -->
                     <div class="relative transform lg:translate-x-35">
-                        <div class="enhanced-image-card w-120 h-80 ml-auto" style="border-radius:2rem 0 0 2rem;">
+                        <div class="ml-auto enhanced-image-card w-120 h-80" style="border-radius:2rem 0 0 2rem;">
                             <img src="{{ asset('storage/images/bg-landing-page.jpeg') }}" alt="Kenapa Lumajang"
-                                class="absolute inset-0 w-full h-full object-cover z-0"
+                                class="absolute inset-0 z-0 object-cover w-full h-full"
                                 style="border-radius:2rem 0 0 2rem;">
                             <div class="image-overlay" style="border-radius:2rem 0 0 2rem;">
                                 <div class="image-content">
                                     <div class="image-icon">
                                         <i class="fas fa-globe-asia"></i>
                                     </div>
-                                    <h3 class="text-xl font-bold mb-2">Kenapa Lumajang?</h3>
+                                    <h3 class="mb-2 text-xl font-bold">Kenapa Lumajang?</h3>
                                     <p class="text-sm opacity-90">Alam & Budaya yang Memikat</p>
                                 </div>
                             </div>
@@ -808,56 +808,56 @@
         </section>
 
         {{-- Destinations Carousel Section --}}
-        <section class="section-transition dynamic-bg w-full px-4 py-20 relative">
+        <section class="relative w-full px-4 py-20 section-transition dynamic-bg">
             <div class="grid-pattern"></div>
             <div class="floating-element float-2 left-[10%] bottom-[30%]"></div>
             <div class="floating-element float-1 right-[15%] top-[20%]"></div>
 
-            <div class="relative max-w-7xl mx-auto">
+            <div class="relative mx-auto max-w-7xl">
                 <!-- Enhanced Section Header -->
-                <div class="text-center mb-12 space-y-4">
-                    <span class="text-green-400 font-semibold text-sm tracking-widest uppercase block text-reveal">
+                <div class="mb-12 space-y-4 text-center">
+                    <span class="block text-sm font-semibold tracking-widest text-green-400 uppercase text-reveal">
                         DESTINASI
                     </span>
-                    <h2 class="text-4xl md:text-5xl font-bold text-white mb-4 text-reveal delay-1">
+                    <h2 class="mb-4 text-4xl font-bold text-white md:text-5xl text-reveal delay-1">
                         Explore <span class="text-green-400">Amazing Destinations</span>
                     </h2>
-                    <p class="text-lg text-gray-300 max-w-2xl mx-auto text-reveal delay-2">
+                    <p class="max-w-2xl mx-auto text-lg text-gray-300 text-reveal delay-2">
                         Discover breathtaking landscapes and unforgettable experiences in every corner of Lumajang
                     </p>
                     <!-- Decorative Line -->
-                    <div class="flex justify-center items-center gap-4 text-reveal delay-3">
+                    <div class="flex items-center justify-center gap-4 text-reveal delay-3">
                         <div class="h-[1px] w-20 bg-gradient-to-r from-transparent via-green-400 to-transparent"></div>
-                        <i class="fas fa-compass text-green-400 text-xl animate-spin-slow"></i>
+                        <i class="text-xl text-green-400 fas fa-compass animate-spin-slow"></i>
                         <div class="h-[1px] w-20 bg-gradient-to-r from-transparent via-green-400 to-transparent"></div>
                     </div>
                 </div>
 
                 <!-- Enhanced Navigation Arrows -->
                 <button id="prevBtn"
-                    class="absolute left-0 top-1/2 -translate-y-1/2 z-20 bg-black/30 backdrop-blur-sm text-white rounded-full p-4 shadow-lg hover:bg-green-500/30 transition-all duration-300 -ml-4 group">
+                    class="absolute left-0 z-20 p-4 -ml-4 text-white transition-all duration-300 -translate-y-1/2 rounded-full shadow-lg top-1/2 bg-black/30 backdrop-blur-sm hover:bg-green-500/30 group">
                     <svg xmlns="http://www.w3.org/2000/svg"
-                        class="h-6 w-6 transform group-hover:-translate-x-1 transition-transform" fill="none"
+                        class="w-6 h-6 transition-transform transform group-hover:-translate-x-1" fill="none"
                         viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
                     </svg>
                 </button>
 
                 <button id="nextBtn"
-                    class="absolute right-0 top-1/2 -translate-y-1/2 z-20 bg-black/30 backdrop-blur-sm text-white rounded-full p-4 shadow-lg hover:bg-green-500/30 transition-all duration-300 -mr-4 group">
+                    class="absolute right-0 z-20 p-4 -mr-4 text-white transition-all duration-300 -translate-y-1/2 rounded-full shadow-lg top-1/2 bg-black/30 backdrop-blur-sm hover:bg-green-500/30 group">
                     <svg xmlns="http://www.w3.org/2000/svg"
-                        class="h-6 w-6 transform group-hover:translate-x-1 transition-transform" fill="none"
+                        class="w-6 h-6 transition-transform transform group-hover:translate-x-1" fill="none"
                         viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
                     </svg>
                 </button>
 
                 <!-- Cards Container -->
-                <div id="cardsContainer" class="overflow-x-auto py-8 px-12 hide-scrollbar scroll-smooth">
-                    <div class="flex items-center space-x-0 w-max mx-auto" id="cardsWrapper">
+                <div id="cardsContainer" class="px-12 py-8 overflow-x-auto hide-scrollbar scroll-smooth">
+                    <div class="flex items-center mx-auto space-x-0 w-max" id="cardsWrapper">
                         @foreach ($destinations as $index => $destination)
                             <x-destination-card :title="$destination->nama" :lokasi="$destination->lokasi" :image="$destination->gambarWisata->first()
-                                ? asset('storage/' . $destination->gambarWisata->first()->path_gambar)
+                                ? asset('storage/images/' . $destination->gambarWisata->first()->path_gambar)
                                 : asset('storage/images/default-wisata.jpg')" :url="route('wisata.detail', $destination->id)"
                                 :isActive="$index === 2" />
                         @endforeach

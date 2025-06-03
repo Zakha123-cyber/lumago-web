@@ -23,13 +23,13 @@ class GambarWisataSeeder extends Seeder
             // Tumpak Sewu Images
             [
                 'wisata_id' => $tumpakSewu,
-                'path_gambar' => 'tumpak-sewu.jpg',
+                'path_gambar' => 'tumpak-sewu.jpeg',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
                 'wisata_id' => $tumpakSewu,
-                'path_gambar' => 'tumpak-sewu-1.jpg',
+                'path_gambar' => 'tumpak-sewu-1.jpeg',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
@@ -37,13 +37,13 @@ class GambarWisataSeeder extends Seeder
             // Semeru Images
             [
                 'wisata_id' => $semeru,
-                'path_gambar' => 'semeru.jpg',
+                'path_gambar' => 'semeru.jpeg',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
                 'wisata_id' => $semeru,
-                'path_gambar' => 'semeru-1.jpg',
+                'path_gambar' => 'semeru-1.jpeg',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
@@ -51,13 +51,13 @@ class GambarWisataSeeder extends Seeder
             // Pantai Bambang Images
             [
                 'wisata_id' => $pantaiBambang,
-                'path_gambar' => 'bambang.jpg',
+                'path_gambar' => 'bambang.jpeg',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
                 'wisata_id' => $pantaiBambang,
-                'path_gambar' => 'bambang-1.jpg',
+                'path_gambar' => 'bambang-1.jpeg',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
@@ -65,7 +65,7 @@ class GambarWisataSeeder extends Seeder
             // Kapas Biru Images
             [
                 'wisata_id' => $kapasBiru,
-                'path_gambar' => 'kapas-biru.jpg',
+                'path_gambar' => 'kapas-biru.jpeg',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
@@ -85,7 +85,7 @@ class GambarWisataSeeder extends Seeder
             ],
             [
                 'wisata_id' => $b29,
-                'path_gambar' => 'b29-1.jpg',
+                'path_gambar' => 'b29-1.jpeg',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],

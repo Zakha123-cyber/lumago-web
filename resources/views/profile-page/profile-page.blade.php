@@ -1,274 +1,3 @@
-{{-- <!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ auth()->user()->name }} - Profile</title>
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-</head>
-
-<body class="bg-gray-900">
-    <!-- Background Effects -->
-    <div class="fixed inset-0 z-0">
-        <div class="absolute inset-0 bg-gradient-radial"></div>
-        <div class="absolute inset-0 bg-grid-pattern opacity-10"></div>
-        <div class="floating-element float-1"></div>
-        <div class="floating-element float-2"></div>
-        <div class="floating-element float-3"></div>
-    </div>
-
-    <!-- Back Button -->
-    <button onclick="history.back()"
-        class="fixed top-6 left-6 z-50 back-btn bg-white/10 backdrop-blur-md text-white px-4 py-2 rounded-full">
-        <i class="fas fa-arrow-left"></i>
-        <span class="ml-2">Kembali</span>
-    </button>
-
-    <!-- Main Content -->
-    <div class="relative min-h-screen z-10 pt-24 pb-12">
-        <div class="container mx-auto px-6">
-            <!-- Profile Header -->
-            <div class="content-card rounded-2xl p-8 mb-8 fade-in">
-                <div class="flex flex-col md:flex-row items-center gap-8">
-                    <!-- Profile Image -->
-                    <div class="relative">
-                        <div class="w-32 h-32 rounded-full overflow-hidden border-4 border-green-500/30 hover-lift">
-                            <img src="https://ui-avatars.com/api/?name={{ urlencode(auth()->user()->name) }}&background=10B981&color=fff"
-                                alt="Profile" class="w-full h-full object-cover">
-                        </div>
-                        <div class="absolute bottom-0 right-0 bg-green-500 p-2 rounded-full text-white">
-                            <i class="fas fa-camera"></i>
-                        </div>
-                    </div>
-
-                    <!-- User Info -->
-                    <div class="flex-1 text-center md:text-left">
-                        <h1 class="text-3xl font-bold text-white mb-2">{{ auth()->user()->name }}</h1>
-                        <p class="text-gray-400 mb-4">{{ auth()->user()->role }}</p>
-                        <div class="flex flex-wrap gap-4 justify-center md:justify-start">
-                            <span class="bg-white/10 px-4 py-2 rounded-full text-sm text-gray-300">
-                                <i class="fas fa-envelope mr-2 text-green-400"></i>
-                                {{ auth()->user()->email }}
-                            </span>
-                            <span class="bg-white/10 px-4 py-2 rounded-full text-sm text-gray-300">
-                                <i class="fas fa-phone mr-2 text-green-400"></i>
-                                {{ auth()->user()->phone }}
-                            </span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Stats Grid -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                <!-- Transactions -->
-                <div class="content-card rounded-xl p-6 hover-lift fade-in delay-1">
-                    <div class="flex items-center justify-between mb-4">
-                        <h3 class="text-lg font-semibold text-white">Transaksi</h3>
-                        <span class="text-green-400"><i class="fas fa-ticket"></i></span>
-                    </div>
-                    <p class="text-3xl font-bold text-white">{{ auth()->user()->transaksi->count() }}</p>
-                    <p class="text-gray-400 text-sm">Total Transaksi</p>
-                </div>
-
-                @if (auth()->user()->role === 'admin')
-                    <!-- Wisata Management -->
-                    <div class="content-card rounded-xl p-6 hover-lift fade-in delay-2">
-                        <div class="flex items-center justify-between mb-4">
-                            <h3 class="text-lg font-semibold text-white">Tempat Wisata</h3>
-                            <span class="text-green-400"><i class="fas fa-map-location-dot"></i></span>
-                        </div>
-                        <p class="text-3xl font-bold text-white">{{ auth()->user()->tempatWisata->count() }}</p>
-                        <p class="text-gray-400 text-sm">Dikelola</p>
-                    </div>
-
-                    <!-- Validations -->
-                    <div class="content-card rounded-xl p-6 hover-lift fade-in delay-3">
-                        <div class="flex items-center justify-between mb-4">
-                            <h3 class="text-lg font-semibold text-white">Validasi</h3>
-                            <span class="text-green-400"><i class="fas fa-check-circle"></i></span>
-                        </div>
-                        <p class="text-3xl font-bold text-white">{{ auth()->user()->scanValidasi->count() }}</p>
-                        <p class="text-gray-400 text-sm">Total Validasi</p>
-                    </div>
-                @endif
-            </div>
-
-            <!-- Recent Activity -->
-            <div class="content-card rounded-2xl p-8 fade-in delay-4">
-                <h2 class="text-2xl font-bold text-white mb-6">Aktivitas Terbaru</h2>
-                <div class="space-y-4">
-                    @forelse(auth()->user()->transaksi()->latest()->take(5)->get() as $transaksi)
-                        <div class="bg-white/5 rounded-xl p-4 hover-lift">
-                            <div class="flex items-center justify-between">
-                                <div>
-                                    <h4 class="text-white font-semibold">{{ $transaksi->tempatWisata->nama }}</h4>
-                                    <p class="text-sm text-gray-400">{{ $transaksi->created_at->diffForHumans() }}</p>
-                                </div>
-                                <span class="text-green-400 text-lg font-semibold">
-                                    Rp {{ number_format($transaksi->total_harga, 0, ',', '.') }}
-                                </span>
-                            </div>
-                        </div>
-                    @empty
-                        <p class="text-gray-400 text-center py-4">Belum ada aktivitas</p>
-                    //@endforelse
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <style>
-        /* Background Styles */
-        .bg-gradient-radial {
-            background: radial-gradient(circle at center,
-                    rgba(15, 23, 42, 0.95) 0%,
-                    rgba(2, 6, 23, 0.98) 100%);
-        }
-
-        .bg-grid-pattern {
-            background-image:
-                linear-gradient(rgba(16, 185, 129, 0.05) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(16, 185, 129, 0.05) 1px, transparent 1px);
-            background-size: 50px 50px;
-            animation: gridMove 20s linear infinite;
-        }
-
-        /* Animations */
-        .fade-in {
-            opacity: 0;
-            transform: translateY(20px);
-            animation: fadeIn 0.8s ease-out forwards;
-        }
-
-        @keyframes fadeIn {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .delay-1 {
-            animation-delay: 0.2s;
-        }
-
-        .delay-2 {
-            animation-delay: 0.4s;
-        }
-
-        .delay-3 {
-            animation-delay: 0.6s;
-        }
-
-        .delay-4 {
-            animation-delay: 0.8s;
-        }
-
-        /* Card Styles */
-        .content-card {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: all 0.3s ease;
-        }
-
-        .hover-lift {
-            transition: all 0.3s ease;
-        }
-
-        .hover-lift:hover {
-            transform: translateY(-5px);
-            background: rgba(255, 255, 255, 0.08);
-        }
-
-        /* Floating Elements */
-        .floating-element {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(80px);
-            opacity: 0.15;
-            pointer-events: none;
-        }
-
-        .float-1 {
-            width: 300px;
-            height: 300px;
-            background: #10b981;
-            left: 10%;
-            top: 20%;
-            animation: float1 15s ease-in-out infinite;
-        }
-
-        .float-2 {
-            width: 250px;
-            height: 250px;
-            background: #3b82f6;
-            right: 15%;
-            top: 30%;
-            animation: float2 20s ease-in-out infinite;
-        }
-
-        .float-3 {
-            width: 200px;
-            height: 200px;
-            background: #8b5cf6;
-            left: 30%;
-            bottom: 20%;
-            animation: float3 18s ease-in-out infinite;
-        }
-
-        @keyframes float1 {
-
-            0%,
-            100% {
-                transform: translate(0, 0);
-            }
-
-            50% {
-                transform: translate(30px, -30px);
-            }
-        }
-
-        @keyframes float2 {
-
-            0%,
-            100% {
-                transform: translate(0, 0);
-            }
-
-            50% {
-                transform: translate(-20px, 20px);
-            }
-        }
-
-        @keyframes float3 {
-
-            0%,
-            100% {
-                transform: translate(0, 0);
-            }
-
-            50% {
-                transform: translate(25px, 25px);
-            }
-        }
-
-        @keyframes gridMove {
-            0% {
-                transform: translateY(-50px);
-            }
-
-            100% {
-                transform: translateY(0px);
-            }
-        }
-    </style>
-</body>
-
-</html> --}}
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -292,40 +21,40 @@
 
     <!-- Back Button -->
     <button onclick="history.back()"
-        class="fixed top-6 left-6 z-50 back-btn bg-white/10 backdrop-blur-md text-white px-4 py-2 rounded-full">
+        class="fixed z-50 px-4 py-2 text-white rounded-full top-6 left-6 back-btn bg-white/10 backdrop-blur-md">
         <i class="fas fa-arrow-left"></i>
         <span class="ml-2">Kembali</span>
     </button>
 
     <!-- Main Content -->
-    <div class="relative min-h-screen z-10 pt-24 pb-12">
-        <div class="container mx-auto px-6">
+    <div class="relative z-10 min-h-screen pt-24 pb-12">
+        <div class="container px-6 mx-auto">
             <!-- Profile Header -->
-            <div class="content-card rounded-2xl p-8 mb-8 fade-in">
-                <div class="flex flex-col md:flex-row items-center gap-8">
+            <div class="p-8 mb-8 content-card rounded-2xl fade-in">
+                <div class="flex flex-col items-center gap-8 md:flex-row">
                     <!-- Profile Image -->
                     <div class="relative">
-                        <div class="w-32 h-32 rounded-full overflow-hidden border-4 border-green-500/30 hover-lift">
-                            <img src="https://ui-avatars.com/api/?name=Fuad&background=10B981&color=fff" alt="Profile"
-                                class="w-full h-full object-cover">
+                        <div class="w-32 h-32 overflow-hidden border-4 rounded-full border-green-500/30 hover-lift">
+                            <img src="https://ui-avatars.com/api/?name={{ urlencode(auth()->user()->name) }}&background=10B981&color=fff"
+                                alt="Profile" class="object-cover w-full h-full">
                         </div>
-                        <div class="absolute bottom-0 right-0 bg-green-500 p-2 rounded-full text-white">
+                        <div class="absolute bottom-0 right-0 p-2 text-white bg-green-500 rounded-full">
                             <i class="fas fa-camera"></i>
                         </div>
                     </div>
 
                     <!-- User Info -->
                     <div class="flex-1 text-center md:text-left">
-                        <h1 class="text-3xl font-bold text-white mb-2">Fuad</h1>
-                        <p class="text-gray-400 mb-4">Admin</p>
-                        <div class="flex flex-wrap gap-4 justify-center md:justify-start">
-                            <span class="bg-white/10 px-4 py-2 rounded-full text-sm text-gray-300">
-                                <i class="fas fa-envelope mr-2 text-green-400"></i>
-                                Admin123@gmail.com
+                        <h1 class="mb-2 text-3xl font-bold text-white">{{ auth()->user()->name }}</h1>
+                        <p class="mb-4 text-gray-400">{{ ucfirst(auth()->user()->role) }}</p>
+                        <div class="flex flex-wrap justify-center gap-4 md:justify-start">
+                            <span class="px-4 py-2 text-sm text-gray-300 rounded-full bg-white/10">
+                                <i class="mr-2 text-green-400 fas fa-envelope"></i>
+                                {{ auth()->user()->email }}
                             </span>
-                            <span class="bg-white/10 px-4 py-2 rounded-full text-sm text-gray-300">
-                                <i class="fas fa-phone mr-2 text-green-400"></i>
-                                081727822
+                            <span class="px-4 py-2 text-sm text-gray-300 rounded-full bg-white/10">
+                                <i class="mr-2 text-green-400 fas fa-phone"></i>
+                                {{ auth()->user()->phone }}
                             </span>
                         </div>
                     </div>
@@ -333,208 +62,236 @@
             </div>
 
             <!-- Stats Grid -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <div class="grid grid-cols-1 gap-6 mb-8 md:grid-cols-3">
                 <!-- Transactions -->
-                <div class="content-card rounded-xl p-6 hover-lift fade-in delay-1">
+                <div class="p-6 content-card rounded-xl hover-lift fade-in delay-1">
                     <div class="flex items-center justify-between mb-4">
                         <h3 class="text-lg font-semibold text-white">Transaksi</h3>
                         <span class="text-green-400"><i class="fas fa-ticket"></i></span>
                     </div>
-                    <p class="text-3xl font-bold text-white">90</p>
-                    <p class="text-gray-400 text-sm">Total Transaksi</p>
+                    <p class="text-3xl font-bold text-white">{{ auth()->user()->transaksi()->count() }}</p>
+                    <p class="text-sm text-gray-400">Total Transaksi</p>
                 </div>
 
-                {{-- @if (auth()->user()->role === 'admin')
+                @if (auth()->user()->role === 'adminwisata')
                     <!-- Wisata Management -->
-                    <div class="content-card rounded-xl p-6 hover-lift fade-in delay-2">
+                    <div class="p-6 content-card rounded-xl hover-lift fade-in delay-2">
                         <div class="flex items-center justify-between mb-4">
                             <h3 class="text-lg font-semibold text-white">Tempat Wisata</h3>
                             <span class="text-green-400"><i class="fas fa-map-location-dot"></i></span>
                         </div>
-                        <p class="text-3xl font-bold text-white">98</p>
-                        <p class="text-gray-400 text-sm">Dikelola</p>
+                        <p class="text-3xl font-bold text-white">{{ auth()->user()->tempatWisata()->count() }}</p>
+                        <p class="text-sm text-gray-400">Dikelola</p>
                     </div>
 
                     <!-- Validations -->
-                    <div class="content-card rounded-xl p-6 hover-lift fade-in delay-3">
+                    <div class="p-6 content-card rounded-xl hover-lift fade-in delay-3">
                         <div class="flex items-center justify-between mb-4">
                             <h3 class="text-lg font-semibold text-white">Validasi</h3>
                             <span class="text-green-400"><i class="fas fa-check-circle"></i></span>
                         </div>
-                        <p class="text-3xl font-bold text-white">90</p>
-                        <p class="text-gray-400 text-sm">Total Validasi</p>
+                        <p class="text-3xl font-bold text-white">{{ auth()->user()->validasi()->count() }}</p>
+                        <p class="text-sm text-gray-400">Total Validasi</p>
                     </div>
-                @endif --}}
+                @endif
             </div>
 
             <!-- Recent Activity -->
-            <div class="content-card rounded-2xl p-8 fade-in delay-4">
-                <h2 class="text-2xl font-bold text-white mb-6">Aktivitas Terbaru</h2>
+            <div class="p-8 content-card rounded-2xl fade-in delay-4">
+                <h2 class="mb-6 text-2xl font-bold text-white">Aktivitas Terbaru</h2>
                 <div class="space-y-4">
-                    {{-- /@forelse(auth()->user()->transaksi()->latest()->take(5)->get() as $transaksi) --}}
-                    <div class="bg-white/5 rounded-xl p-4 hover-lift">
-                        <div class="flex items-center justify-between">
-                            <div>
-                                <h4 class="text-white font-semibold">Tumpak Sewu</h4>
-                                <p class="text-sm text-gray-400">23-23-2029 }}</p>
+                    @forelse(auth()->user()->transaksi()->with('tempatWisata')->latest()->take(5)->get() as $transaksi)
+                        <div class="p-4 bg-white/5 rounded-xl hover-lift">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <h4 class="font-semibold text-white">{{ $transaksi->tempatWisata->nama }}</h4>
+                                    <div class="flex items-center gap-4 mt-1">
+                                        <span class="text-sm text-gray-400">
+                                            <i class="mr-2 fas fa-calendar"></i>
+                                            {{ \Carbon\Carbon::parse($transaksi->tanggal_booking)->format('d M Y') }}
+                                        </span>
+                                        <span class="text-sm text-gray-400">
+                                            <i class="mr-2 fas fa-ticket"></i>
+                                            {{ $transaksi->jumlah_tiket }} Tiket
+                                        </span>
+                                    </div>
+                                    <div class="mt-2">
+                                        <span
+                                            class="px-2 py-1 rounded-full text-xs
+                                            {{ $transaksi->status_pembayaran === 'selesai' ? 'bg-green-500/20 text-green-400' : 'bg-yellow-500/20 text-yellow-400' }}">
+                                            {{ ucfirst($transaksi->status_pembayaran) }}
+                                        </span>
+                                        <span
+                                            class="px-2 py-1 rounded-full text-xs ml-2
+                                            {{ $transaksi->status_tiket === 'sudah_digunakan' ? 'bg-blue-500/20 text-blue-400' : 'bg-gray-500/20 text-gray-400' }}">
+                                            {{ str_replace('_', ' ', ucfirst($transaksi->status_tiket)) }}
+                                        </span>
+                                    </div>
+                                </div>
+                                <span class="text-lg font-semibold text-green-400">
+                                    Rp {{ number_format($transaksi->total_bayar, 0, ',', '.') }}
+                                </span>
                             </div>
-                            <span class="text-green-400 text-lg font-semibold">
-                                Rp 100.000
-                            </span>
                         </div>
-                    </div>
-                    <p class="text-gray-400 text-center py-4">Belum ada aktivitas</p>
-
+                    @empty
+                        <div class="py-8 text-center">
+                            <i class="mb-3 text-4xl text-gray-600 fas fa-ticket-alt"></i>
+                            <p class="text-gray-400">Belum ada aktivitas transaksi</p>
+                        </div>
+                    @endforelse
                 </div>
             </div>
         </div>
     </div>
+    </div>
 
-    <style>
-        /* Background Styles */
-        .bg-gradient-radial {
-            background: radial-gradient(circle at center,
-                    rgba(15, 23, 42, 0.95) 0%,
-                    rgba(2, 6, 23, 0.98) 100%);
-        }
-
-        .bg-grid-pattern {
-            background-image:
-                linear-gradient(rgba(16, 185, 129, 0.05) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(16, 185, 129, 0.05) 1px, transparent 1px);
-            background-size: 50px 50px;
-            animation: gridMove 20s linear infinite;
-        }
-
-        /* Animations */
-        .fade-in {
-            opacity: 0;
-            transform: translateY(20px);
-            animation: fadeIn 0.8s ease-out forwards;
-        }
-
-        @keyframes fadeIn {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .delay-1 {
-            animation-delay: 0.2s;
-        }
-
-        .delay-2 {
-            animation-delay: 0.4s;
-        }
-
-        .delay-3 {
-            animation-delay: 0.6s;
-        }
-
-        .delay-4 {
-            animation-delay: 0.8s;
-        }
-
-        /* Card Styles */
-        .content-card {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: all 0.3s ease;
-        }
-
-        .hover-lift {
-            transition: all 0.3s ease;
-        }
-
-        .hover-lift:hover {
-            transform: translateY(-5px);
-            background: rgba(255, 255, 255, 0.08);
-        }
-
-        /* Floating Elements */
-        .floating-element {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(80px);
-            opacity: 0.15;
-            pointer-events: none;
-        }
-
-        .float-1 {
-            width: 300px;
-            height: 300px;
-            background: #10b981;
-            left: 10%;
-            top: 20%;
-            animation: float1 15s ease-in-out infinite;
-        }
-
-        .float-2 {
-            width: 250px;
-            height: 250px;
-            background: #3b82f6;
-            right: 15%;
-            top: 30%;
-            animation: float2 20s ease-in-out infinite;
-        }
-
-        .float-3 {
-            width: 200px;
-            height: 200px;
-            background: #8b5cf6;
-            left: 30%;
-            bottom: 20%;
-            animation: float3 18s ease-in-out infinite;
-        }
-
-        @keyframes float1 {
-
-            0%,
-            100% {
-                transform: translate(0, 0);
+    @push('styles')
+        <style>
+            /* Background Styles */
+            .bg-gradient-radial {
+                background: radial-gradient(circle at center,
+                        rgba(15, 23, 42, 0.95) 0%,
+                        rgba(2, 6, 23, 0.98) 100%);
             }
 
-            50% {
-                transform: translate(30px, -30px);
-            }
-        }
-
-        @keyframes float2 {
-
-            0%,
-            100% {
-                transform: translate(0, 0);
+            .bg-grid-pattern {
+                background-image:
+                    linear-gradient(rgba(16, 185, 129, 0.05) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(16, 185, 129, 0.05) 1px, transparent 1px);
+                background-size: 50px 50px;
+                animation: gridMove 20s linear infinite;
             }
 
-            50% {
-                transform: translate(-20px, 20px);
-            }
-        }
-
-        @keyframes float3 {
-
-            0%,
-            100% {
-                transform: translate(0, 0);
+            /* Animations */
+            .fade-in {
+                opacity: 0;
+                transform: translateY(20px);
+                animation: fadeIn 0.8s ease-out forwards;
             }
 
-            50% {
-                transform: translate(25px, 25px);
-            }
-        }
-
-        @keyframes gridMove {
-            0% {
-                transform: translateY(-50px);
+            @keyframes fadeIn {
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
             }
 
-            100% {
-                transform: translateY(0px);
+            .delay-1 {
+                animation-delay: 0.2s;
             }
-        }
-    </style>
+
+            .delay-2 {
+                animation-delay: 0.4s;
+            }
+
+            .delay-3 {
+                animation-delay: 0.6s;
+            }
+
+            .delay-4 {
+                animation-delay: 0.8s;
+            }
+
+            /* Card Styles */
+            .content-card {
+                background: rgba(255, 255, 255, 0.05);
+                backdrop-filter: blur(12px);
+                border: 1px solid rgba(255, 255, 255, 0.1);
+                transition: all 0.3s ease;
+            }
+
+            .hover-lift {
+                transition: all 0.3s ease;
+            }
+
+            .hover-lift:hover {
+                transform: translateY(-5px);
+                background: rgba(255, 255, 255, 0.08);
+            }
+
+            /* Floating Elements */
+            .floating-element {
+                position: absolute;
+                border-radius: 50%;
+                filter: blur(80px);
+                opacity: 0.15;
+                pointer-events: none;
+            }
+
+            .float-1 {
+                width: 300px;
+                height: 300px;
+                background: #10b981;
+                left: 10%;
+                top: 20%;
+                animation: float1 15s ease-in-out infinite;
+            }
+
+            .float-2 {
+                width: 250px;
+                height: 250px;
+                background: #3b82f6;
+                right: 15%;
+                top: 30%;
+                animation: float2 20s ease-in-out infinite;
+            }
+
+            .float-3 {
+                width: 200px;
+                height: 200px;
+                background: #8b5cf6;
+                left: 30%;
+                bottom: 20%;
+                animation: float3 18s ease-in-out infinite;
+            }
+
+            @keyframes float1 {
+
+                0%,
+                100% {
+                    transform: translate(0, 0);
+                }
+
+                50% {
+                    transform: translate(30px, -30px);
+                }
+            }
+
+            @keyframes float2 {
+
+                0%,
+                100% {
+                    transform: translate(0, 0);
+                }
+
+                50% {
+                    transform: translate(-20px, 20px);
+                }
+            }
+
+            @keyframes float3 {
+
+                0%,
+                100% {
+                    transform: translate(0, 0);
+                }
+
+                50% {
+                    transform: translate(25px, 25px);
+                }
+            }
+
+            @keyframes gridMove {
+                0% {
+                    transform: translateY(-50px);
+                }
+
+                100% {
+                    transform: translateY(0px);
+                }
+            }
+        </style>
+    @endpush
 </body>
 
 </html>

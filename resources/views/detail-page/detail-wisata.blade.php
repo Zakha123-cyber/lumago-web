@@ -414,7 +414,7 @@
 <body class="relative overflow-x-hidden">
     <!-- Back Button -->
     <button onclick="history.back()"
-        class="fixed top-6 left-6 z-50 back-btn bg-white/10 backdrop-blur-md text-white px-4 py-2 rounded-full flex items-center gap-2 hover:bg-white/20">
+        class="fixed z-50 flex items-center gap-2 px-4 py-2 text-white rounded-full top-6 left-6 back-btn bg-white/10 backdrop-blur-md hover:bg-white/20">
         <i class="fas fa-arrow-left"></i>
         <span class="text-sm font-medium">Kembali</span>
     </button>
@@ -434,57 +434,91 @@
         <div class="relative overflow-hidden">
             <!-- Desktop Grid -->
             <div class="hidden md:grid grid-cols-12 gap-6 h-[600px] container mx-auto px-8 pt-24">
-                <!-- Main Large Image -->
-                <div class="col-span-7 relative group overflow-hidden rounded-3xl image-grid-item">
-                    <img src="{{ $wisata->gambarWisata->first() ? asset('storage/' . $wisata->gambarWisata->first()->path_gambar) : asset('storage/images/default-wisata.jpg') }}"
-                        alt="{{ $wisata->nama }} "
-                        class="w-full h-full object-cover transform transition-all duration-700 hover:scale-110">
-                    <div
-                        class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-100 group-hover:opacity-0 transition-opacity duration-500">
-                    </div>
-                </div>
-
-                <!-- Right Side Grid -->
-                <div class="col-span-5 grid grid-rows-2 gap-6">
-                    <!-- Top Two Images -->
-                    <div class="grid grid-cols-2 gap-6">
-                        @foreach ($wisata->gambarWisata->skip(1)->take(2) as $gambar)
-                            <div class="relative group overflow-hidden rounded-2xl image-grid-item">
-                                <img src="{{ asset('storage/' . $gambar->path_gambar) }}" alt="{{ $wisata->nama }}"
-                                    class="w-full h-full object-cover transform transition-all duration-700 hover:scale-110">
-                                <div
-                                    class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-100 group-hover:opacity-0 transition-opacity duration-500">
-                                </div>
-                            </div>
-                        @endforeach
-                    </div>
-                    <!-- View All Photos Button -->
-                    <div class="relative group overflow-hidden rounded-2xl image-grid-item">
-                        <img src="{{ $wisata->gambarWisata->skip(3)->first() ? asset('storage/' . $wisata->gambarWisata->skip(3)->first()->path_gambar) : asset('storage/images/default-wisata.jpg') }}"
-                            alt="{{ $wisata->nama }}" class="w-full h-full object-cover">
+                @if ($wisata->gambarWisata->count() > 0)
+                    <!-- Main Large Image -->
+                    <div class="relative col-span-7 overflow-hidden group rounded-3xl image-grid-item">
+                        <div class="absolute inset-0 flex items-center justify-center overflow-hidden">
+                            <img src="{{ asset('storage/images/' . $wisata->gambarWisata->first()->path_gambar) }}"
+                                alt="{{ $wisata->nama }}"
+                                class="absolute object-cover min-w-full min-h-full transition-all duration-700 transform hover:scale-110">
+                        </div>
                         <div
-                            class="absolute inset-0 bg-black/60 backdrop-blur-[2px] group-hover:bg-black/70 transition-all duration-500 flex items-center justify-center">
-                            <button
-                                class="view-all-btn px-6 py-3 rounded-xl border border-white/20 text-white flex items-center gap-3 transform hover:scale-105 transition-all duration-300">
-                                <i class="fas fa-images text-lg"></i>
-                                <span class="font-medium">View All Photos</span>
-                            </button>
+                            class="absolute inset-0 transition-opacity duration-500 opacity-100 bg-gradient-to-t from-black/60 to-transparent group-hover:opacity-0">
                         </div>
                     </div>
-                </div>
+
+                    <!-- Right Side Grid -->
+                    <div class="grid col-span-5 grid-rows-2 gap-6">
+                        @if ($wisata->gambarWisata->count() > 1)
+                            <!-- Top Images Grid -->
+                            <div
+                                class="grid {{ $wisata->gambarWisata->count() > 2 ? 'grid-cols-2' : 'grid-cols-1' }} gap-6">
+                                @foreach ($wisata->gambarWisata->skip(1)->take(2) as $gambar)
+                                    <div class="relative overflow-hidden group rounded-2xl image-grid-item">
+                                        <div class="absolute inset-0 flex items-center justify-center overflow-hidden">
+                                            <img src="{{ asset('storage/images/' . $gambar->path_gambar) }}"
+                                                alt="{{ $wisata->nama }}"
+                                                class="absolute object-cover min-w-full min-h-full transition-all duration-700 transform hover:scale-110">
+                                        </div>
+                                        <div
+                                            class="absolute inset-0 transition-opacity duration-500 opacity-100 bg-gradient-to-t from-black/60 to-transparent group-hover:opacity-0">
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
+                        @endif
+
+                        <!-- View All Photos Button -->
+                        @if ($wisata->gambarWisata->count() > 3)
+                            <div class="relative overflow-hidden group rounded-2xl image-grid-item">
+                                <div class="absolute inset-0 flex items-center justify-center overflow-hidden">
+                                    <img src="{{ asset('storage/images/' . $wisata->gambarWisata->get(3)->path_gambar) }}"
+                                        alt="{{ $wisata->nama }}" class="absolute object-cover min-w-full min-h-full">
+                                </div>
+                                <div
+                                    class="absolute inset-0 bg-black/60 backdrop-blur-[2px] group-hover:bg-black/70 transition-all duration-500 flex items-center justify-center">
+                                    <button onclick="openGallery()"
+                                        class="flex items-center gap-3 px-6 py-3 text-white transition-all duration-300 transform border view-all-btn rounded-xl border-white/20 hover:scale-105">
+                                        <i class="text-lg fas fa-images"></i>
+                                        <span class="font-medium">View All Photos
+                                            ({{ $wisata->gambarWisata->count() }})</span>
+                                    </button>
+                                </div>
+                            </div>
+                        @endif
+                    </div>
+                @else
+                    <!-- Fallback when no images -->
+                    <div
+                        class="flex items-center justify-center h-full col-span-12 rounded-3xl bg-white/5 backdrop-blur-sm">
+                        <div class="text-center text-gray-400">
+                            <i class="mb-4 text-5xl fas fa-image"></i>
+                            <p class="text-lg">No images available</p>
+                        </div>
+                    </div>
+                @endif
             </div>
 
             <!-- Mobile Carousel -->
             <div class="md:hidden relative h-[400px] rounded-2xl overflow-hidden container mx-auto px-6 pt-24">
-                <div class="swiper mySwiper h-full w-full">
+                <div class="w-full h-full swiper mySwiper">
                     <div class="swiper-wrapper">
-                        @foreach ($wisata->gambarWisata as $gambar)
-                            <div class="swiper-slide relative">
-                                <img src="{{ asset('storage/' . $gambar->path_gambar) }}" alt="{{ $wisata->nama }}"
-                                    class="w-full h-full object-cover">
-                                <div class="absolute inset-0 bg-gradient-to-b from-transparent to-black/50"></div>
+                        @if ($wisata->gambarWisata->count() > 0)
+                            @foreach ($wisata->gambarWisata as $gambar)
+                                <div class="relative swiper-slide">
+                                    <img src="{{ asset('storage/images/' . $gambar->path_gambar) }}"
+                                        alt="{{ $wisata->nama }}" class="object-cover w-full h-full">
+                                    <div class="absolute inset-0 bg-gradient-to-b from-transparent to-black/50"></div>
+                                </div>
+                            @endforeach
+                        @else
+                            <div class="flex items-center justify-center swiper-slide bg-white/5">
+                                <div class="text-center text-gray-400">
+                                    <i class="mb-4 text-5xl fas fa-image"></i>
+                                    <p class="text-lg">No images available</p>
+                                </div>
                             </div>
-                        @endforeach
+                        @endif
                     </div>
                     <div class="swiper-button-next !z-20"></div>
                     <div class="swiper-button-prev !z-20"></div>
@@ -494,57 +528,57 @@
         </div>
 
         <!-- Content Section -->
-        <div class="container mx-auto px-6 py-12">
-            <div class="content-card rounded-2xl border border-white/10 p-8 mb-8 bg-white/5 backdrop-blur-md">
+        <div class="container px-6 py-12 mx-auto">
+            <div class="p-8 mb-8 border content-card rounded-2xl border-white/10 bg-white/5 backdrop-blur-md">
                 <!-- Title & Basic Info -->
-                <div class="flex flex-wrap justify-between items-start mb-8 fade-in delay-1">
+                <div class="flex flex-wrap items-start justify-between mb-8 fade-in delay-1">
                     <div>
                         <h1
-                            class="text-4xl md:text-5xl font-bold text-white mb-4 bg-clip-text text-transparent bg-gradient-to-r from-green-400 to-emerald-600">
+                            class="mb-4 text-4xl font-bold text-transparent text-white md:text-5xl bg-clip-text bg-gradient-to-r from-green-400 to-emerald-600">
                             {{ $wisata->nama }}
                         </h1>
                         <div class="flex flex-wrap items-center gap-4 text-gray-300">
                             <div class="flex items-center">
-                                <i class="fas fa-map-marker-alt text-green-400 mr-2"></i>
+                                <i class="mr-2 text-green-400 fas fa-map-marker-alt"></i>
                                 <span>{{ $wisata->lokasi }}</span>
                             </div>
                             <div class="flex items-center">
-                                <i class="fas fa-tag text-green-400 mr-2"></i>
+                                <i class="mr-2 text-green-400 fas fa-tag"></i>
                                 <span>{{ $wisata->kategori->nama_kategori }}</span>
                             </div>
                         </div>
                     </div>
                     <div
-                        class="price-tag bg-green-500/90 backdrop-blur-sm text-white px-6 py-3 rounded-xl text-lg font-semibold mt-4 md:mt-0">
+                        class="px-6 py-3 mt-4 text-lg font-semibold text-white price-tag bg-green-500/90 backdrop-blur-sm rounded-xl md:mt-0">
                         Rp {{ number_format($wisata->harga_tiket, 0, ',', '.') }}
                     </div>
                 </div>
 
                 <!-- Description -->
-                <div class="prose prose-invert max-w-none mb-8 fade-in delay-2">
-                    <h2 class="text-2xl font-semibold text-white mb-4 relative inline-block">
+                <div class="mb-8 prose prose-invert max-w-none fade-in delay-2">
+                    <h2 class="relative inline-block mb-4 text-2xl font-semibold text-white">
                         Tentang Wisata
                     </h2>
-                    <p class="text-gray-300 leading-relaxed">
+                    <p class="leading-relaxed text-gray-300">
                         {{ $wisata->deskripsi }}
                     </p>
                 </div>
 
                 <!-- Operating Hours -->
-                <div class="grid md:grid-cols-2 gap-8 mb-8">
-                    <div class="bg-white/5 rounded-xl p-6 fade-in delay-3 hover-lift border border-white/10">
-                        <h3 class="text-xl font-semibold text-white mb-4 flex items-center">
-                            <i class="fas fa-clock text-green-400 mr-3"></i>
+                <div class="grid gap-8 mb-8 md:grid-cols-2">
+                    <div class="p-6 border bg-white/5 rounded-xl fade-in delay-3 hover-lift border-white/10">
+                        <h3 class="flex items-center mb-4 text-xl font-semibold text-white">
+                            <i class="mr-3 text-green-400 fas fa-clock"></i>
                             Jam Operasional
                         </h3>
                         <div class="space-y-3 text-gray-300">
-                            <div class="flex justify-between items-center py-2 border-b border-white/10">
+                            <div class="flex items-center justify-between py-2 border-b border-white/10">
                                 <span class="flex items-center">
-                                    <i class="fas fa-calendar-day text-green-400 mr-2"></i>
+                                    <i class="mr-2 text-green-400 fas fa-calendar-day"></i>
                                     Jam Buka
                                 </span>
                                 <span
-                                    class="bg-green-900/30 px-3 py-1 rounded-full">{{ $wisata->jam_operasional }}</span>
+                                    class="px-3 py-1 rounded-full bg-green-900/30">{{ $wisata->jam_operasional }}</span>
                             </div>
                         </div>
                     </div>
@@ -552,8 +586,8 @@
 
                 <!-- Location Map -->
                 <div class="mb-8 fade-in delay-4">
-                    <h3 class="text-2xl font-semibold text-white mb-4 flex items-center">
-                        <i class="fas fa-map-marked-alt text-green-400 mr-3"></i>
+                    <h3 class="flex items-center mb-4 text-2xl font-semibold text-white">
+                        <i class="mr-3 text-green-400 fas fa-map-marked-alt"></i>
                         Lokasi
                     </h3>
                     <div class="bg-white/5 rounded-xl overflow-hidden h-[400px] relative border border-white/10">
@@ -565,7 +599,7 @@
 
                 <!-- Booking Button -->
                 <button
-                    class="w-full booking-btn text-white py-4 rounded-xl text-lg font-semibold transition-all duration-300 flex items-center justify-center gap-2 fade-in delay-4 hover-lift">
+                    class="flex items-center justify-center w-full gap-2 py-4 text-lg font-semibold text-white transition-all duration-300 booking-btn rounded-xl fade-in delay-4 hover-lift">
                     <span>Booking Sekarang</span>
                     <i class="fas fa-arrow-right"></i>
                 </button>
@@ -575,8 +609,8 @@
 
     <!-- Water Sound Effect Toggle -->
     <button id="soundToggle"
-        class="fixed bottom-6 right-6 z-50 bg-green-500/20 backdrop-blur-md text-white w-12 h-12 rounded-full flex items-center justify-center hover:bg-green-500/30 transition-all duration-300 shadow-lg">
-        <i class="fas fa-water text-xl"></i>
+        class="fixed z-50 flex items-center justify-center w-12 h-12 text-white transition-all duration-300 rounded-full shadow-lg bottom-6 right-6 bg-green-500/20 backdrop-blur-md hover:bg-green-500/30">
+        <i class="text-xl fas fa-water"></i>
     </button>
 
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
@@ -623,10 +657,10 @@
             soundToggle.addEventListener('click', function() {
                 if (isPlaying) {
                     waterSound.pause();
-                    soundToggle.innerHTML = '<i class="fas fa-water text-xl"></i>';
+                    soundToggle.innerHTML = '<i class="text-xl fas fa-water"></i>';
                 } else {
                     waterSound.play();
-                    soundToggle.innerHTML = '<i class="fas fa-volume-up text-xl"></i>';
+                    soundToggle.innerHTML = '<i class="text-xl fas fa-volume-up"></i>';
                 }
                 isPlaying = !isPlaying;
             });
@@ -643,6 +677,14 @@
                 });
             });
         });
+
+        function openGallery() {
+            // You can implement a lightbox gallery here
+            // Example using a basic modal:
+            const images = @json($wisata->gambarWisata->pluck('path_gambar'));
+            // Implement your preferred gallery/lightbox solution
+            console.log('Opening gallery with images:', images);
+        }
     </script>
 </body>
 

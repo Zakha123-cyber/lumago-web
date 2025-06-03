@@ -12,6 +12,40 @@ use Illuminate\View\View;
 class ProfileController extends Controller
 {
     /**
+     * Display the user's profile page.
+     */
+    public function index(): View
+    {
+        $user = Auth::user();
+        $recentTransactions = $user->transaksi()
+            ->with('tempatWisata')
+            ->latest()
+            ->take(5)
+            ->get();
+
+        return view('profile-page.profile-page', [
+            'user' => $user,
+            'recentTransactions' => $recentTransactions
+        ]);
+    }
+
+    /**
+     * Display the user's booking history.
+     */
+    public function bookings(): View
+    {
+        $user = Auth::user();
+        $bookings = $user->transaksi()
+            ->with(['tempatWisata', 'tempatWisata.gambarWisata'])
+            ->latest()
+            ->paginate(10);
+
+        return view('profile-page.bookings', [
+            'bookings' => $bookings
+        ]);
+    }
+
+    /**
      * Display the user's profile form.
      */
     public function edit(Request $request): View
@@ -34,7 +68,8 @@ class ProfileController extends Controller
 
         $request->user()->save();
 
-        return Redirect::route('profile.edit')->with('status', 'profile-updated');
+        return Redirect::route('profile.edit')
+            ->with('status', 'profile-updated');
     }
 
     /**
