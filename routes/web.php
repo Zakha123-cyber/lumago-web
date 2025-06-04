@@ -35,7 +35,7 @@ Route::get('/wisata/{id}', [WisataController::class, 'show'])->name('wisata.deta
 
 // // Protected routes
 Route::middleware(['auth'])->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::get('/profile/bookings', [ProfileController::class, 'bookings'])->name('profile.bookings');

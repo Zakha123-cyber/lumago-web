@@ -30,7 +30,7 @@
                         x-transition:leave-start="transform opacity-100 scale-100"
                         x-transition:leave-end="transform opacity-0 scale-95"
                         class="absolute right-0 w-48 py-2 mt-2 bg-white rounded-lg shadow-xl">
-                        <a href="{{ route('profile.edit') }}" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">
+                        <a href="{{ route('profile.index') }}" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">
                             <i class="mr-2 fas fa-user"></i> Profile
                         </a>
                         <a href="{{ route('profile.bookings') }}" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">

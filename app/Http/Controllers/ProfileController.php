@@ -17,16 +17,32 @@ class ProfileController extends Controller
     public function index(): View
     {
         $user = Auth::user();
+
+        // Total transaksi user
+        $totalTransaksi = $user->transaksi()->count();
+
+        // Jika admin wisata, hitung tempat wisata & validasi
+        $totalTempatWisata = null;
+        $totalValidasi = null;
+        if ($user->role === 'adminwisata') {
+            $totalTempatWisata = $user->tempatWisata()->count();
+            $totalValidasi = $user->scanValidasi()->count();
+        }
+
+        // Ambil 5 transaksi terbaru beserta relasi wisata
         $recentTransactions = $user->transaksi()
-            ->with('tempatWisata')
+            ->with('wisata')
             ->latest()
             ->take(5)
             ->get();
 
-        return view('profile-page.profile-page', [
-            'user' => $user,
-            'recentTransactions' => $recentTransactions
-        ]);
+        return view('profile-page.profile-page', compact(
+            'user',
+            'totalTransaksi',
+            'totalTempatWisata',
+            'totalValidasi',
+            'recentTransactions'
+        ));
     }
 
     /**
@@ -36,7 +52,7 @@ class ProfileController extends Controller
     {
         $user = Auth::user();
         $bookings = $user->transaksi()
-            ->with(['tempatWisata', 'tempatWisata.gambarWisata'])
+            ->with(['wisata', 'wisata.gambarWisata'])
             ->latest()
             ->paginate(10);
 
