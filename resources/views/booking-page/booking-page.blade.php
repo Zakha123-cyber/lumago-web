@@ -13,77 +13,81 @@
             <div class="floating-element float-1 left-[5%] top-[20%]"></div>
             <div class="floating-element float-2 right-[10%] bottom-[30%]"></div>
 
-            <div class="container mx-auto px-6 relative z-10">
-                <div class="text-center mb-12 fade-up">
-                    <span class="text-green-400 font-semibold text-sm tracking-widest uppercase block">EXPLORE</span>
-                    <h1 class="text-4xl md:text-5xl font-bold text-white mt-4 mb-6">
+            <div class="container relative z-10 px-6 mx-auto">
+                <div class="mb-12 text-center fade-up">
+                    <span class="block text-sm font-semibold tracking-widest text-green-400 uppercase">EXPLORE</span>
+                    <h1 class="mt-4 mb-6 text-4xl font-bold text-white md:text-5xl">
                         Discover Amazing Places
                     </h1>
-                    <p class="text-gray-400 max-w-2xl mx-auto">
+                    <p class="max-w-2xl mx-auto text-gray-400">
                         Find and book your next adventure in Lumajang's most beautiful destinations
                     </p>
                 </div>
 
                 <!-- Search Section -->
                 <div class="max-w-3xl mx-auto mb-16 fade-up">
-                    <div class="bg-white/5 backdrop-blur-lg rounded-2xl p-4 border border-white/10">
+                    <form action="{{ route('wisata.index') }}" method="GET"
+                        class="p-4 border bg-white/5 backdrop-blur-lg rounded-2xl border-white/10">
                         <div class="flex flex-wrap gap-4">
                             <div class="flex-1 min-w-[200px]">
-                                <input type="text" placeholder="Search destinations..."
-                                    class="w-full bg-white/10 text-white rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-green-400/50">
+                                <input type="text" name="search" placeholder="Search destinations..."
+                                    value="{{ request('search') }}"
+                                    class="w-full px-4 py-3 text-white rounded-lg bg-white/10 focus:outline-none focus:ring-2 focus:ring-green-400/50">
                             </div>
                             <div class="flex-none">
-                                <button
-                                    class="bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-lg transition-all duration-300 flex items-center gap-2">
+                                <button type="submit"
+                                    class="flex items-center gap-2 px-6 py-3 text-white transition-all duration-300 bg-green-500 rounded-lg hover:bg-green-600">
                                     <i class="fas fa-search"></i>
                                     Search
                                 </button>
                             </div>
                         </div>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>
 
         <!-- Destinations Grid -->
-        <div class="container mx-auto px-6 pb-20">
+        <div class="container px-6 pb-20 mx-auto">
             <!-- Filters -->
             <div class="flex flex-wrap items-center justify-between mb-8 fade-up">
-                <h2 class="text-2xl font-bold text-white mb-4 md:mb-0">Popular Destinations</h2>
-                <div class="flex gap-4">
-                    <button
-                        class="px-4 py-2 rounded-lg bg-green-500/10 text-green-400 hover:bg-green-500/20 transition-all">
+                <h2 class="mb-4 text-2xl font-bold text-white md:mb-0">
+                    {{ request('kategori') ?? 'Popular' }} Destinations
+                </h2>
+                <div class="flex gap-4 pb-2 overflow-x-auto">
+                    <a href="{{ route('wisata.index') }}"
+                        class="px-4 py-2 rounded-lg {{ !request('kategori') ? 'bg-green-500/10 text-green-400' : 'bg-white/5 text-gray-400' }} hover:bg-green-500/20 transition-all whitespace-nowrap">
                         All
-                    </button>
-                    <button class="px-4 py-2 rounded-lg bg-white/5 text-gray-400 hover:bg-white/10 transition-all">
-                        Waterfalls
-                    </button>
-                    <button class="px-4 py-2 rounded-lg bg-white/5 text-gray-400 hover:bg-white/10 transition-all">
-                        Mountains
-                    </button>
-                    <button class="px-4 py-2 rounded-lg bg-white/5 text-gray-400 hover:bg-white/10 transition-all">
-                        Beaches
-                    </button>
+                    </a>
+                    @foreach ($categories as $category)
+                        <a href="{{ route('wisata.index', ['kategori' => $category->nama_kategori]) }}"
+                            class="px-4 py-2 rounded-lg {{ request('kategori') == $category->nama_kategori ? 'bg-green-500/10 text-green-400' : 'bg-white/5 text-gray-400' }} hover:bg-green-500/20 transition-all whitespace-nowrap">
+                            {{ $category->nama_kategori }}
+                        </a>
+                    @endforeach
                 </div>
             </div>
 
             <!-- Cards Grid -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                @for ($i = 0; $i < 9; $i++)
-                    <div class="fade-up" style="animation-delay: {{ $i * 0.1 }}s">
-                        <x-booking-card />
+            <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+                @forelse($wisata as $index => $item)
+                    <div class="fade-up" style="animation-delay: {{ $index * 0.1 }}s">
+                        <x-booking-card :wisata="$item" />
                     </div>
-                @endfor
+                @empty
+                    <div class="col-span-3 py-12 text-center text-gray-400">
+                        <i class="mb-4 text-4xl fas fa-search"></i>
+                        <p class="text-lg">No destinations found</p>
+                    </div>
+                @endforelse
             </div>
 
-            <!-- Load More Button -->
-            <div class="text-center mt-12 fade-up">
-                <button
-                    class="bg-white/5 hover:bg-white/10 text-white px-8 py-3 rounded-lg transition-all duration-300 flex items-center gap-2 mx-auto">
-                    <span>Load More</span>
-                    <i class="fas fa-arrow-down"></i>
-                </button>
-            </div>
+            <!-- Pagination -->
+            @if ($wisata->hasPages())
+                <div class="mt-12 fade-up">
+                    {{ $wisata->links() }}
+                </div>
+            @endif
         </div>
     </div>
 

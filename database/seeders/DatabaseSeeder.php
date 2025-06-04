@@ -16,6 +16,7 @@ class DatabaseSeeder extends Seeder
             KategoriWisataSeeder::class,
             TempatWisataSeeder::class,
             GambarWisataSeeder::class,
+            TransaksiSeeder::class,
         ]);
     }
 }
