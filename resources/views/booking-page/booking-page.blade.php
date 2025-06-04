@@ -51,10 +51,10 @@
         <div class="container px-6 pb-20 mx-auto">
             <!-- Filters -->
             <div class="flex flex-wrap items-center justify-between mb-8 fade-up">
-                <h2 class="mb-4 text-2xl font-bold text-white md:mb-0">
+                <h2 class="text-2xl font-bold text-white mb-7 md:mb-0">
                     {{ request('kategori') ?? 'Popular' }} Destinations
                 </h2>
-                <div class="flex gap-4 pb-2 overflow-x-auto">
+                <div class="flex gap-4 pb-2 mt-4 overflow-x-auto">
                     <a href="{{ route('wisata.index') }}"
                         class="px-4 py-2 rounded-lg {{ !request('kategori') ? 'bg-green-500/10 text-green-400' : 'bg-white/5 text-gray-400' }} hover:bg-green-500/20 transition-all whitespace-nowrap">
                         All
