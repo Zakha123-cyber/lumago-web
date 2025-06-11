@@ -20,7 +20,9 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/booking/{id}', [BookingController::class, 'create'])->name('booking.create');
     Route::post('/booking', [BookingController::class, 'store'])->name('booking.store');
+    Route::get('/booking/payment/{id}', [BookingController::class, 'payment'])->name('booking.payment');
     Route::get('/booking/success/{id}', [BookingController::class, 'success'])->name('booking.success');
+    Route::get('/booking/ticket/{id}', [BookingController::class, 'showTicket'])->name('booking.show-ticket'); // Add this new route
 
     // Booking routes that require authentication
     Route::post('/wisata/{id}/book', [WisataController::class, 'book'])->name('wisata.book');

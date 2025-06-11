@@ -12,6 +12,7 @@ class Transaksi extends Model
     protected $table = 'transaksi';
 
     protected $fillable = [
+        'order_id',
         'user_id',
         'wisata_id',
         'tanggal_booking',
@@ -19,7 +20,8 @@ class Transaksi extends Model
         'total_bayar',
         'status_pembayaran',
         'status_tiket',
-        'qr_code_path'
+        'qr_code_path',
+        'snap_token'
     ];
 
     public function user()

@@ -94,10 +94,10 @@
 
                         <!-- Submit Button -->
                         <div class="flex justify-end">
-                            <button type="submit"
+                            <button type="submit" id="pay-button"
                                 class="px-8 py-3 text-white transition-all duration-300 bg-green-500 rounded-lg hover:bg-green-600 focus:ring-4 focus:ring-green-500/50">
                                 <i class="mr-2 fas fa-ticket"></i>
-                                Booking Sekarang
+                                Lakukan Pembayaran
                             </button>
                         </div>
                     </form>
@@ -105,78 +105,126 @@
             </div>
         </div>
     </div>
+@endsection
 
+{{-- @if (isset($snapToken) && $snapToken)
     @push('script')
+        <script src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="{{ env('MIDTRANS_CLIENT_KEY') }}">
+        </script>
         <script>
-            function incrementTicket() {
-                const input = document.getElementById('jumlah_tiket');
-                input.value = parseInt(input.value) + 1;
-                updateTotal();
-            }
-
-            function decrementTicket() {
-                const input = document.getElementById('jumlah_tiket');
-                if (parseInt(input.value) > 1) {
-                    input.value = parseInt(input.value) - 1;
-                    updateTotal();
-                }
-            }
-
-            function updateTotal() {
-                const ticketPrice = {{ $wisata->harga_tiket }};
-                const quantity = document.getElementById('jumlah_tiket').value;
-                const total = ticketPrice * quantity;
-                document.getElementById('totalPayment').textContent =
-                    'Rp ' + total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-            }
-
-            // Update total when typing in the input
-            document.getElementById('jumlah_tiket').addEventListener('input', updateTotal);
+            document.addEventListener("DOMContentLoaded", function() {
+                document.getElementById('pay-button').onclick = function(e) {
+                    e.preventDefault();
+                    snap.pay('{{ $snapToken }}', {
+                        onSuccess: function(result) {
+                            window.location.href = "{{ route('booking.success', $transaksi->id) }}";
+                        },
+                        onPending: function(result) {
+                            window.location.href = "{{ route('booking.success', $transaksi->id) }}";
+                        },
+                        onError: function(result) {
+                            alert('Pembayaran gagal atau dibatalkan.');
+                        }
+                    });
+                };
+            });
         </script>
     @endpush
+@endif --}}
 
-    @push('styles')
-        <style>
-            /* Remove number input arrows */
-            input[type=number]::-webkit-inner-spin-button,
-            input[type=number]::-webkit-outer-spin-button {
-                -webkit-appearance: none;
-                margin: 0;
+@push('script')
+    @if (session('snapToken'))
+        <script src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="{{ config('midtrans.clientKey') }}">
+        </script>
+        <script>
+            window.onload = function() {
+                snap.pay('{{ session('snapToken') }}', {
+                    onSuccess: function(result) {
+                        window.location.href = "{{ route('booking.success', session('transaksiId')) }}";
+                    },
+                    onPending: function(result) {
+                        window.location.href = "{{ route('booking.success', session('transaksiId')) }}";
+                    },
+                    onError: function(result) {
+                        alert('Pembayaran gagal atau dibatalkan.');
+                        location.reload();
+                    },
+                    onClose: function() {
+                        location.reload();
+                    }
+                });
+            };
+        </script>
+    @endif
+    <script>
+        function incrementTicket() {
+            const input = document.getElementById('jumlah_tiket');
+            input.value = parseInt(input.value) + 1;
+            updateTotal();
+        }
+
+        function decrementTicket() {
+            const input = document.getElementById('jumlah_tiket');
+            if (parseInt(input.value) > 1) {
+                input.value = parseInt(input.value) - 1;
+                updateTotal();
+            }
+        }
+
+        function updateTotal() {
+            const ticketPrice = {{ $wisata->harga_tiket }};
+            const quantity = document.getElementById('jumlah_tiket').value;
+            const total = ticketPrice * quantity;
+            document.getElementById('totalPayment').textContent =
+                'Rp ' + total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+        }
+
+        // Update total when typing in the input
+        document.getElementById('jumlah_tiket').addEventListener('input', updateTotal);
+    </script>
+@endpush
+
+@push('styles')
+    <style>
+        /* Remove number input arrows */
+        input[type=number]::-webkit-inner-spin-button,
+        input[type=number]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        input[type=number] {
+            -moz-appearance: textfield;
+        }
+
+        /* Background Elements */
+        .floating-element {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.15;
+            pointer-events: none;
+        }
+
+        .float-1 {
+            width: 300px;
+            height: 300px;
+            background: #10b981;
+            left: 10%;
+            top: 20%;
+            animation: float1 15s ease-in-out infinite;
+        }
+
+        @keyframes float1 {
+
+            0%,
+            100% {
+                transform: translate(0, 0);
             }
 
-            input[type=number] {
-                -moz-appearance: textfield;
+            50% {
+                transform: translate(-30px, 30px);
             }
-
-            /* Background Elements */
-            .floating-element {
-                position: absolute;
-                border-radius: 50%;
-                filter: blur(80px);
-                opacity: 0.15;
-                pointer-events: none;
-            }
-
-            .float-1 {
-                width: 300px;
-                height: 300px;
-                background: #10b981;
-                left: 10%;
-                top: 20%;
-                animation: float1 15s ease-in-out infinite;
-            }
-
-            @keyframes float1 {
-
-                0%,
-                100% {
-                    transform: translate(0, 0);
-                }
-
-                50% {
-                    transform: translate(-30px, 30px);
-                }
-            }
-        </style>
-    @endpush
-@endsection
+        }
+    </style>
+@endpush
