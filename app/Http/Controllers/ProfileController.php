@@ -56,7 +56,7 @@ class ProfileController extends Controller
             ->latest()
             ->paginate(10);
 
-        return view('profile-page.bookings', [
+        return view('profile-page.user-bookings', [
             'bookings' => $bookings
         ]);
     }

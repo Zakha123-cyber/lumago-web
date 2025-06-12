@@ -48,7 +48,7 @@
         </div>
 
         <!-- Booking Button -->
-        <a href="{{ route('wisata.detail', $wisata->id) }}"
+        <a href="{{ route('booking.create', $wisata->id) }}"
             class="block w-full py-3 text-center text-white transition-all duration-300 transform bg-green-500 rounded-lg hover:bg-green-600 group-hover:-translate-y-1">
             <span class="mr-2">Booking Sekarang</span>
             <i class="inline-block transition-transform fas fa-arrow-right group-hover:translate-x-1"></i>

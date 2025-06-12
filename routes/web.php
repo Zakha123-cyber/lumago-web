@@ -1,32 +1,10 @@
 <?php
 
-// use App\Http\Controllers\ProfileController;
-// use Illuminate\Support\Facades\Route;
-// use App\Http\Controllers\LandingController;
-// use App\Http\Controllers\WisataController;
-
-// //Landing Page
-// Route::get('/', [LandingController::class, 'index'])->name('landing.index');
-
-// Route::get('/dashboard', function () {
-//     return view('dashboard');
-// })->middleware(['auth', 'verified'])->name('dashboard');
-
-// Route::middleware('auth')->group(function () {
-//     //Detail Wisata
-//     Route::prefix('wisata')->group(function () {
-//         Route::get('/', [WisataController::class, 'index'])->name('wisata.index');
-//         Route::get('/{id}', [WisataController::class, 'show'])->name('wisata.detail');
-//     });
-//     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-//     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-//     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-// });
-
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\LandingController;
 use App\Http\Controllers\WisataController;
+use App\Http\Controllers\BookingController;
 
 // Public routes
 Route::get('/', [LandingController::class, 'index'])->name('landing.index');
@@ -39,6 +17,12 @@ Route::middleware(['auth'])->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::get('/profile/bookings', [ProfileController::class, 'bookings'])->name('profile.bookings');
+
+    Route::get('/booking/{id}', [BookingController::class, 'create'])->name('booking.create');
+    Route::post('/booking', [BookingController::class, 'store'])->name('booking.store');
+    Route::get('/booking/payment/{id}', [BookingController::class, 'payment'])->name('booking.payment');
+    Route::get('/booking/success/{id}', [BookingController::class, 'success'])->name('booking.success');
+    Route::get('/booking/ticket/{id}', [BookingController::class, 'showTicket'])->name('booking.show-ticket'); // Add this new route
 
     // Booking routes that require authentication
     Route::post('/wisata/{id}/book', [WisataController::class, 'book'])->name('wisata.book');
