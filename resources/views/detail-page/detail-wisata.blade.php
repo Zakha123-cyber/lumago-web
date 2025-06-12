@@ -598,11 +598,11 @@
                 </div>
 
                 <!-- Booking Button -->
-                <button
+                <a href="{{ route('booking.create', $wisata->id) }}"
                     class="flex items-center justify-center w-full gap-2 py-4 text-lg font-semibold text-white transition-all duration-300 booking-btn rounded-xl fade-in delay-4 hover-lift">
                     <span>Booking Sekarang</span>
                     <i class="fas fa-arrow-right"></i>
-                </button>
+                </a>
             </div>
         </div>
     </div>
