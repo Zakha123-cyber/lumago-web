@@ -21,15 +21,15 @@
             <div class="container px-4 mx-auto sm:px-6 lg:px-8">
                 <!-- Animated Header Section -->
                 <div class="mb-12 text-center md:text-left">
-                    <div class="overflow-hidden">
+                    <div class="pb-2 overflow-hidden">
                         <h1 class="text-4xl font-bold text-white md:text-5xl animate-slide-in">
                             <span
-                                class="inline-block text-transparent bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text">
+                                class="inline-block text-transparent bg-gradient-to-r from-green-400 to-emerald-500 bg-clip-text">
                                 Riwayat Booking
                             </span>
                         </h1>
                     </div>
-                    <div class="overflow-hidden">
+                    <div class="pb-2 overflow-hidden">
                         <p class="mt-3 text-lg text-gray-400 animate-slide-in-delay">
                             Daftar semua transaksi booking tiket wisata Anda
                         </p>
