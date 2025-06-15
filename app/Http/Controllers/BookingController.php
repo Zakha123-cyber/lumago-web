@@ -129,6 +129,6 @@ class BookingController extends Controller
                 ->with('error', 'Pembayaran harus diselesaikan terlebih dahulu.');
         }
 
-        return view('booking-page.show-ticket', compact('transaksi'));
+        return view('booking-page.booking-success', compact('transaksi'));
     }
 }

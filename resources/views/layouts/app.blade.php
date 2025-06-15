@@ -20,6 +20,7 @@
 
     {{-- Navbar --}}
     <x-navbar></x-navbar>
+
     {{-- Content --}}
     <main class="flex-grow">
         @yield('content')
