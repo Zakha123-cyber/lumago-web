@@ -86,6 +86,17 @@ class BookingController extends Controller
     public function payment($id)
     {
         $transaksi = Transaksi::with('wisata')->findOrFail($id);
+
+        // Check if user is authorized
+        if ($transaksi->user_id !== auth()->id()) {
+            abort(403, 'Unauthorized action.');
+        }
+
+        // Check if payment is already completed
+        if ($transaksi->status_pembayaran === 'selesai') {
+            return redirect()->route('booking.show-ticket', $transaksi->id);
+        }
+
         return view('booking-page.payment', [
             'transaksi' => $transaksi,
             'snapToken' => $transaksi->snap_token
@@ -129,6 +140,6 @@ class BookingController extends Controller
                 ->with('error', 'Pembayaran harus diselesaikan terlebih dahulu.');
         }
 
-        return view('booking-page.booking-success', compact('transaksi'));
+        return view('booking-page.show-ticket', compact('transaksi'));
     }
 }
