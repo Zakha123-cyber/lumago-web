@@ -57,6 +57,12 @@ Route::middleware(['auth', 'role:superadmin'])->prefix('superadmin')->name('supe
         'destroy' => 'wisata.destroy',
     ]);
 
+    // Kategori Wisata Management
+    Route::post('/kategori', [SuperAdminWisataController::class, 'storeKategori'])->name('kategori.store');
+
+    // Gambar Wisata Management     
+    Route::post('/gambar-wisata', [SuperAdminWisataController::class, 'storeGambar'])->name('gambar-wisata.store');
+
     // Admin Wisata Management
     Route::resource('admin-wisata', SuperAdminAdminWisataController::class)->names([
         'index' => 'admin-wisata.index',
