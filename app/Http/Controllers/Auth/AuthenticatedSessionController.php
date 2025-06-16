@@ -28,7 +28,11 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->intended(route('landing.index'));
+        return match (Auth::user()->role) {
+            'superadmin' => redirect()->intended(route('superadmin.dashboard.index')),
+            'adminwisata' => redirect()->intended(route('admin-wisata.dashboard.index')),
+            default => redirect()->intended(route('landing.index')),
+        };
     }
 
     /**

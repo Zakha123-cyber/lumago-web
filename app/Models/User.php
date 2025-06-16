@@ -42,7 +42,7 @@ class User extends Authenticatable
 
     public function tempatWisata()
     {
-        return $this->hasMany(TempatWisata::class, 'admin_id');
+        return $this->hasOne(TempatWisata::class, 'admin_id');
     }
 
     public function transaksi()

@@ -13,6 +13,7 @@ class TempatWisata extends Model
 
     protected $fillable = [
         'admin_id',
+        'kategori_id',
         'nama',
         'deskripsi',
         'lokasi',
