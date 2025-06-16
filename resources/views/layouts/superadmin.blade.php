@@ -15,26 +15,44 @@
 
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     @stack('styles')
+
+    <style>
+        [x-cloak] {
+            display: none !important;
+        }
+    </style>
 </head>
 
-<body class="font-sans antialiased">
-    <div class="min-h-screen bg-gray-900">
-        <!-- Sidebar Component -->
-        <x-sidebar-admin />
+<body class="font-sans antialiased bg-gray-900" x-data="{
+    sidebarOpen: window.innerWidth >= 640,
+    init() {
+        window.addEventListener('resize', () => {
+            this.sidebarOpen = window.innerWidth >= 640 ? true : this.sidebarOpen
+        })
+    }
+}">
+    <!-- Mobile Toggle Button - Hidden when sidebar is open -->
+    <button @click="sidebarOpen = !sidebarOpen"
+        class="fixed z-50 p-3 text-2xl text-green-400 transition-opacity duration-300 bg-gray-900 rounded-full shadow-lg left-4 top-4 sm:hidden focus:outline-none"
+        :class="{ 'opacity-0 pointer-events-none': sidebarOpen }">
+        <i class="fa-solid fa-bars"></i>
+    </button>
 
-        <!-- Main Content Area -->
-        <div class="sm:ml-64">
-            <!-- Top Navigation Component -->
-            {{-- <x-top-navigation-admin /> --}}
-
-            <!-- Page Content -->
-            <main class="p-4">
-                @yield('content')
-            </main>
-        </div>
+    <!-- Backdrop -->
+    <div x-cloak x-show="sidebarOpen && window.innerWidth < 640" @click="sidebarOpen = false"
+        class="fixed inset-0 z-30 bg-gray-900/50 sm:hidden backdrop-blur-sm">
     </div>
+
+    <!-- Your existing sidebar component -->
+    <x-sidebar-admin />
+
+    <!-- Main Content -->
+    <main class="px-4 py-5 transition-all duration-300 sm:ml-64">
+        @yield('content')
+    </main>
 
     @stack('scripts')
 </body>

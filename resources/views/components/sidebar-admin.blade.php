@@ -1,9 +1,15 @@
-<aside class="fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0">
-    <div class="h-full px-3 py-4 overflow-y-auto border-r bg-gray-900/95 backdrop-blur-xl border-white/10">
+<aside x-cloak class="fixed top-0 left-0 z-40 w-64 h-screen transition-transform duration-300"
+    :class="{ 'translate-x-0': sidebarOpen, '-translate-x-full': !sidebarOpen }">
+    <div class="relative h-full px-3 py-4 overflow-y-auto border-r bg-gray-900/95 backdrop-blur-xl border-white/10">
+        <!-- Close button for mobile -->
+        <button @click="sidebarOpen = false" class="absolute text-gray-400 top-4 right-4 hover:text-white sm:hidden">
+            <i class="text-xl fa-solid fa-xmark"></i>
+        </button>
+
         <!-- Logo Section with larger size and better spacing -->
         <div class="flex items-center justify-center mb-3">
             <img src="{{ asset('images/logo-lumago.png') }}" alt="LumaGO Logo"
-                class="w-24 h-12 transition-transform duration-300 hover:scale-105">
+                class="h-12 transition-transform duration-300 w-36 hover:scale-105">
         </div>
 
         <!-- Navigation Menu Divider -->
