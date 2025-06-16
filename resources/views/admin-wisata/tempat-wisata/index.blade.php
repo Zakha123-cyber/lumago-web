@@ -205,11 +205,14 @@
                         <h4 class="text-sm font-medium text-gray-400">Alamat Lengkap</h4>
                         <p class="mt-1 text-white break-words">{{ $wisata->lokasi }}</p>
                     </div>
-                    <a href="{{ $wisata->link_maps }}" target="_blank"
-                        class="flex items-center justify-center w-full gap-2 px-4 py-2 mt-4 text-sm font-medium text-white transition-colors bg-green-500 rounded-lg hover:bg-green-600">
-                        <i class="fa-solid fa-location-dot"></i>
-                        Buka di Google Maps
-                    </a>
+                    @if ($wisata->link_maps)
+                        <div class="mt-4 overflow-hidden border rounded-lg border-white/10">
+                            <iframe src="https://www.google.com/maps?q={{ urlencode($wisata->lokasi) }}&output=embed"
+                                width="100%" height="250" style="border:0;" allowfullscreen="" loading="lazy"
+                                referrerpolicy="no-referrer-when-downgrade">
+                            </iframe>
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>
