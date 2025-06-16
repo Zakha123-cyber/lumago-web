@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use Zxing\QrReader; // gunakan library zxing-php untuk decode gambar QR
+use Illuminate\Support\Facades\Log;
 
 class AdminWisataScanController extends Controller
 {
@@ -44,6 +45,12 @@ class AdminWisataScanController extends Controller
 
         if (!$transaksi) {
             return redirect()->route('admin-wisata.scan.index')->with('error', 'Tiket tidak ditemukan.');
+        }
+
+        $admin = auth()->user();
+        $wisataIdAdmin = $admin->tempatWisata->id ?? null;
+        if ($transaksi->wisata_id != $wisataIdAdmin) {
+            return redirect()->route('admin-wisata.scan.index')->with('error', 'Tiket ini bukan untuk wisata yang Anda kelola.');
         }
 
         return view('admin-wisata.scan-tiket.show', compact('transaksi'));
@@ -106,11 +113,23 @@ class AdminWisataScanController extends Controller
 
         Storage::disk('public')->delete($path);
 
-        if (!$order_id) {
-            return back()->with('error', 'QR Code tidak valid atau tidak terbaca.');
+        if (empty($order_id)) {
+            return back()->with('error', 'QR Code tidak terdeteksi atau tidak valid');
         }
 
-        // Redirect ke halaman detail tiket
+        $transaksi = Transaksi::where('order_id', $order_id)->first();
+        if (!$transaksi) {
+            return back()->with('error', 'Order ID tidak ditemukan');
+        }
+
+        // Validasi wisata
+        $admin = auth()->user();
+        $wisataIdAdmin = $admin->tempatWisata->id ?? null;
+        if ($transaksi->wisata_id != $wisataIdAdmin) {
+            return back()->with('error', 'Tiket ini bukan untuk wisata yang Anda kelola.');
+        }
+
+        // Redirect ke halaman show
         return redirect()->route('admin-wisata.scan.show', $order_id);
     }
 }

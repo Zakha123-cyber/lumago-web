@@ -2,6 +2,12 @@
 
 @section('content')
     <div class="px-4 mx-auto space-y-8 max-w-7xl">
+        <div class="p-4 border rounded-xl bg-white/5 border-white/10 backdrop-blur-sm">
+            <h1 class="text-2xl font-bold text-white">
+                Halo, {{ Auth::user()->name }}!
+            </h1>
+            <p class="mt-1 text-gray-400">Kelola tempat wisata Anda dengan baik!</p>
+        </div>
         {{-- Filter Bulan --}}
         <form method="GET" class="flex flex-col items-center gap-4 mb-6 sm:flex-row">
             <div>

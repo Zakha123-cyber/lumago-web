@@ -128,6 +128,12 @@ Route::middleware(['auth', 'role:adminwisata'])->prefix('admin-wisata')->name('a
         'index' => 'pengunjung.index',
         'show' => 'pengunjung.show',
     ])->only(['index', 'show']);
+
+    Route::prefix('tempat-wisata')->name('tempat-wisata.')->group(function () {
+        Route::get('/gambar', [AdminWisataWisataController::class, 'gambar'])->name('gambar');
+        Route::post('/{wisata}/gambar', [AdminWisataWisataController::class, 'gambarStore'])->name('gambar.store');
+        Route::delete('/{wisata}/gambar/{gambar}', [AdminWisataWisataController::class, 'gambarDestroy'])->name('gambar.destroy');
+    });
 });
 
 require __DIR__ . '/auth.php';
