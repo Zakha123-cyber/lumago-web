@@ -4,15 +4,27 @@ namespace App\Http\Controllers\Admin\SuperAdmin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Transaksi;
+use Carbon\Carbon;
 
 class SuperAdminTransaksiController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $bulan = $request->input('bulan', now()->format('Y-m')); // default bulan ini
+
+        $transaksi = Transaksi::with(['user', 'wisata'])
+            ->when($bulan, function ($query, $bulan) {
+                $query->whereMonth('tanggal_booking', Carbon::parse($bulan)->month)
+                    ->whereYear('tanggal_booking', Carbon::parse($bulan)->year);
+            })
+            ->orderBy('tanggal_booking', 'desc')
+            ->paginate(10);
+
+        return view('superadmin.transaksi.index', compact('transaksi', 'bulan'));
     }
 
     /**

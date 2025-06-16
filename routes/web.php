@@ -16,6 +16,7 @@ use App\Http\Controllers\Admin\AdminWisata\AdminWisataDashboardController;
 use App\Http\Controllers\Admin\AdminWisata\AdminWisataWisataController;
 use App\Http\Controllers\Admin\AdminWisata\AdminWisataTransaksiController;
 use App\Http\Controllers\Admin\AdminWisata\AdminWisataPengunjungController;
+use App\Http\Controllers\Admin\AdminWisata\AdminWisataScanController;
 
 // Public routes
 Route::get('/', [LandingController::class, 'index'])->name('landing.index');
@@ -60,7 +61,7 @@ Route::middleware(['auth', 'role:superadmin'])->prefix('superadmin')->name('supe
     // Kategori Wisata Management
     Route::post('/kategori', [SuperAdminWisataController::class, 'storeKategori'])->name('kategori.store');
 
-    // Gambar Wisata Management     
+    // Gambar Wisata Management
     Route::post('/gambar-wisata', [SuperAdminWisataController::class, 'storeGambar'])->name('gambar-wisata.store');
 
     // Admin Wisata Management
@@ -97,6 +98,13 @@ Route::middleware(['auth', 'role:superadmin'])->prefix('superadmin')->name('supe
 Route::middleware(['auth', 'role:adminwisata'])->prefix('admin-wisata')->name('admin-wisata.')->group(function () {
     // Dashboard
     Route::get('/dashboard', [AdminWisataDashboardController::class, 'index'])->name('dashboard.index');
+
+    // Scan Tiket
+    Route::get('/scan-tiket', [AdminWisataScanController::class, 'index'])->name('scan.index');
+    Route::post('/scan-tiket/import', [AdminWisataScanController::class, 'import'])->name('scan.import');
+    Route::get('/scan-tiket/show/{order_id}', [AdminWisataScanController::class, 'show'])->name('scan.show');
+    Route::post('/scan-tiket/verify/{order_id}', [AdminWisataScanController::class, 'verify'])->name('scan.verify');
+
 
     // Wisata Management
     Route::resource('wisata', AdminWisataWisataController::class)->names([

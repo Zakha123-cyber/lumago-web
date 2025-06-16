@@ -50,6 +50,20 @@
             @else
                 <!-- AdminWisata Menu Items -->
                 <li>
+                    <a href="{{ route('admin-wisata.dashboard.index') }}"
+                        class="flex items-center p-2 rounded-lg text-white hover:bg-gray-800/80 group {{ request()->routeIs('admin-wisata.dashboard.*') ? 'bg-gray-800/80' : '' }}">
+                        <i class="w-5 h-5 text-green-400 transition-all fa-solid fa-chart-line"></i>
+                        <span class="ml-3">Dashboard</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('admin-wisata.scan.index') }}"
+                        class="flex items-center p-2 rounded-lg text-white hover:bg-gray-800/80 group {{ request()->routeIs('admin-wisata.scan.*') ? 'bg-gray-800/80' : '' }}">
+                        <i class="w-5 h-5 text-green-400 transition-all fa-solid fa-qrcode"></i>
+                        <span class="ml-3">Scan Tiket</span>
+                    </a>
+                </li>
+                <li>
                     <a href="{{ route('admin-wisata.wisata.index') }}"
                         class="flex items-center p-2 rounded-lg text-white hover:bg-gray-800/80 group {{ request()->routeIs('admin-wisata.wisata.*') ? 'bg-gray-800/80' : '' }}">
                         <i class="w-5 h-5 text-green-400 transition-all fa-solid fa-location-dot"></i>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin\SuperAdmin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\User;
 
 class SuperAdminUserController extends Controller
 {
@@ -12,7 +13,8 @@ class SuperAdminUserController extends Controller
      */
     public function index()
     {
-        //
+        $users = User::orderBy('created_at', 'desc')->paginate(10);
+        return view('superadmin.users.index', compact('users'));
     }
 
     /**
