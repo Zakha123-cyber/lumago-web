@@ -39,6 +39,15 @@
                             <x-input-error :messages="$errors->get('name')" class="mt-2" />
                         </div>
 
+                        <!-- Phone Number -->
+                        <div>
+                            <x-input-label for="phone" :value="__('No. HP')" class="text-gray-300" />
+                            <x-text-input id="phone" type="text" name="phone" :value="old('phone')" required
+                                autocomplete="tel"
+                                class="block w-full mt-1 text-gray-300 rounded-lg bg-gray-800/80 border-white/10 focus:border-green-500 focus:ring-green-500" />
+                            <x-input-error :messages="$errors->get('phone')" class="mt-2" />
+                        </div>
+
                         <!-- Email Address -->
                         <div>
                             <x-input-label for="email" :value="__('Email')" class="text-gray-300" />
